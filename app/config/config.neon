@@ -23,3 +23,10 @@ services:
 	- App\Model\UserManager
 	- App\Forms\SignFormFactory
 	router: App\RouterFactory::createRouter
+
+
+security:
+	roles:
+		guest:
+		user:
+		admin: [user]

@@ -4,13 +4,17 @@ namespace App\Presenters;
 
 use Nette;
 use App\Forms\SignFormFactory;
+use Tracy\Debugger;
 
 
 class SignPresenter extends BasePresenter
 {
-	/** @var SignFormFactory @inject */
-	public $factory;
+	/** @var SignFormFactory */
+	private $factory;
 
+	public function injectSignFormFactory(SignFormFactory $service){
+		$this->factory = $service;
+	}
 
 	/**
 	 * Sign-in form factory.
@@ -20,6 +24,7 @@ class SignPresenter extends BasePresenter
 	{
 		$form = $this->factory->create();
 		$form->onSuccess[] = function ($form) {
+			Debugger::barDump($form);
 			$form->getPresenter()->redirect('Homepage:');
 		};
 		return $form;

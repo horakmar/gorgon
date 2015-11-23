@@ -10,6 +10,7 @@
 
 	<title>{ifset title}{include title|striptags}{/ifset}</title>
 
+	<link rel="stylesheet" href="{$basePath}/css/main.css">
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
 	<meta name="viewport" content="width=device-width">
@@ -17,6 +18,11 @@
 </head>
 
 <body>
+    <div class="bar">
+      <h1>Gorgon</h1>
+      <div class="space"></div>
+      <div class="username">Přihlášen:</div>
+    </div>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 	{include content}

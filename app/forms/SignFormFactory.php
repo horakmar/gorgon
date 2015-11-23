@@ -25,20 +25,28 @@ class SignFormFactory extends Nette\Object
 	public function create()
 	{
 		$form = new Form;
-		$form->addText('username', 'Username:')
+		$form->addText('username', 'Login:')
 			->setRequired('Please enter your username.');
 
-		$form->addPassword('password', 'Password:')
+		$form->addPassword('password', 'Heslo:')
 			->setRequired('Please enter your password.');
 
-		$form->addCheckbox('remember', 'Keep me signed in');
+		$form->addCheckbox('remember', 'Zůstat přihlášen');
 
-		$form->addSubmit('send', 'Sign in');
-
+		$form->addSubmit('send', 'Přihlásit');
+		
+		$form->addSubmit('cancel', 'Zpět')
+			->setValidationScope(FALSE);
+						
+		$form->setDefaults(array(
+		    'username' => 'user',
+		    'password' => NULL,
+		    'remember' => TRUE
+		));
+		
 		$form->onSuccess[] = array($this, 'formSucceeded');
 		return $form;
 	}
-
 
 	public function formSucceeded(Form $form, $values)
 	{
@@ -47,12 +55,12 @@ class SignFormFactory extends Nette\Object
 		} else {
 			$this->user->setExpiration('20 minutes', TRUE);
 		}
-
-		try {
-			$this->user->login($values->username, $values->password);
-		} catch (Nette\Security\AuthenticationException $e) {
-			$form->addError($e->getMessage());
+		if($form->isSubmitted()->getName() != 'cancel'){
+			try {
+				$this->user->login($values->username, $values->password);
+			} catch (Nette\Security\AuthenticationException $e) {
+				$form->addError($e->getMessage());
+			}
 		}
 	}
-
 }
