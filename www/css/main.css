@@ -1,53 +1,16 @@
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-html {
-  box-sizing: border-box;
+body {
+  min-height: 2000px;
 }
 
-.icon {
-  width: 30px;
-  height: 30px;
-  background: #ccc;
-  border-radius: 50%;
-}
-.bar {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background-image: url("/gorgon/www/images/strip2.jpg");
-  max-width: 1200px;
-  color: white;
-  padding: 10px;
-  font-family: sans;
+.navbar-static-top {
+  margin-bottom: 19px;
 }
 
-.bar > * {
-  margin: 0 10px 0 0;
+div.flash {
+	color: black;
+	background: #FFF9D7;
+	border: 1px solid #E2C822;
+	padding: 1em;
+	margin: 1em 0;
 }
 
-.bar h1 {
-    color: #FFFF1C;
-    margin: 0 10px 0 0;
-}
-
-.space {
-    width: 100%;
-    flex: 1;
-}
-
-@media (max-width: 650px) {
-  .bar {
-    flex-wrap: wrap;
-    background-image: none;
-    background-color: #402A15;
-  }
-  .username {
-    order: 1 !important;
-    width: 100%;
-  }
-  .search {
-    order: 2 !important;
-    width: 100%;
-  }
-}
