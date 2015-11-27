@@ -6,3 +6,5 @@ vendor/*
 !web.config
 app/config/config.local.neon
 .php.tags
+www/bootstrap3
+*.swp
