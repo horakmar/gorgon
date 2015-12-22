@@ -5,6 +5,7 @@ namespace App\Forms;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Security\User;
+use Nextras\Forms\Rendering\Bs3FormRenderer;
 
 
 class SignFormFactory extends Nette\Object
@@ -25,14 +26,16 @@ class SignFormFactory extends Nette\Object
 	public function create()
 	{
 		$form = new Form;
+
+		$form->addGroup();
 		$form->addText('username', 'Login:')
 			->setRequired('Please enter your username.');
-
 		$form->addPassword('password', 'Heslo:')
 			->setRequired('Please enter your password.');
 
 		$form->addCheckbox('remember', 'Zůstat přihlášen');
 
+		$form->addGroup();
 		$form->addSubmit('send', 'Přihlásit');
 		
 		$form->addSubmit('cancel', 'Zpět')
@@ -45,6 +48,7 @@ class SignFormFactory extends Nette\Object
 		));
 		
 		$form->onSuccess[] = array($this, 'formSucceeded');
+		$form->setRenderer(new Bs3FormRenderer);
 		return $form;
 	}
 

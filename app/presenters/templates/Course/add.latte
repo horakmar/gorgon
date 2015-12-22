@@ -1,0 +1,41 @@
+{block content}
+<h1 n:block=title>Nová trať</h1>
+
+{form courseForm}
+<div class="row">
+	<div class="form-group required">
+		<div class="col-sm-1 control-label">{label name /}</div>
+		<div class="col-sm-3">{input name}</div>
+	</div>
+</div>
+<h3>Kontroly</h3>
+<div class="row">
+	<div class="col-sm-4">
+		<table class="formtable">
+		  <thead><tr>
+			<th>Pořadí</th>
+			<th>Kód</th>
+			<th>Typ</th>
+			<th>Sekce</th>
+			<th>Odebrat</th>
+		  </tr></thead>
+		  <tbody>
+			{for $i = 1; $i <= $numcontrols; $i++ }
+			<tr>
+			  <td>K{$i}</td>
+			  <td><input id="k{$i}" type="text" size="3" maxlength="3" name="k[{$i}]"></td>
+			  <td><select name="type[{$i}]">
+				<option value="regular">Běžná</option>
+				<option value="freeo">FreeO</option>
+			  </select></td>
+			  <td><input type="text" size="2" maxlength="2" name="sect[{$i}]"></td>
+			  <td><input type="checkbox" name="del[{$i}]"></td>
+			</tr>
+			{/for}
+		  </tbody>
+		</table>
+	</div>
+</div>
+<hr>
+{input send} {input cancel}
+{/form}

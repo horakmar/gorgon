@@ -1,0 +1,34 @@
+{block content}
+<div id="content">
+	<h1>Závody</h1>
+	<table class="table table-striped table-hover">
+	  <thead><tr>
+		<th>Název <span class="glyphicon glyphicon-chevron-up"></span></th>
+		<th>Datum <i class="tablesorter-icon bootstrap-icon-unsorted"></i></th>
+		<th>Typ <i class="tablesorter-icon bootstrap-icon-unsorted"></i></th>
+		<th>Ident <i class="tablesorter-icon bootstrap-icon-unsorted"></i></th>
+		<th style="text-align: center;">Otevřít</th>
+		<th style="text-align: center;">Smazat</th>
+	  </tr></thead>
+	  <tbody>
+	  <tr n:foreach="$races as $race">
+		<td>{$race->name}</td>
+		<td>{$race->datetime_0|date:'j. n. Y'}</td>
+		<td>{$race->type}</td>
+		<td>{$race->raceid}</td>
+		<td style="text-align: center;"><a n:href="Race:default $race->raceid"><span class="glyphicon glyphicon-edit" style="color: brown;"></span></a></td>
+		<td style="text-align: center;"><span class="glyphicon glyphicon-remove" style="color: red;"></span></td>
+	  </tr>
+      </tbody>
+	</table>
+	<a n:href="Race:add">Nový závod</a>
+</div>
+{/block}
+
+{block scripts}
+<!-- scripts -->
+{include parent}
+{/block}
+
+{block head}
+{/block}

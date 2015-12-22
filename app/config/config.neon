@@ -21,9 +21,13 @@ session:
 
 services:
 	- App\Model\UserManager
+	- App\Model\RaceManager
 	- App\Forms\SignFormFactory
 	router: App\RouterFactory::createRouter
 
+latte:
+    macros:
+        - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros
 
 security:
 	roles:

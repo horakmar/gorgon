@@ -67,7 +67,7 @@ Compiler	vendor/latte/latte/src/Latte/Compiler.php	/^class Compiler extends Obje
 Compiler	vendor/nette/di/src/DI/Compiler.php	/^class Compiler extends Nette\\Object$/;"	c
 CompilerExtension	vendor/nette/di/src/DI/CompilerExtension.php	/^abstract class CompilerExtension extends Nette\\Object$/;"	c
 Component	vendor/nette/component-model/src/ComponentModel/Component.php	/^abstract class Component extends Nette\\Object implements IComponent$/;"	c
-ComposerAutoloaderInitdf550ffe32f452fa479c9430cd5628c0	vendor/composer/autoload_real.php	/^class ComposerAutoloaderInitdf550ffe32f452fa479c9430cd5628c0$/;"	c
+ComposerAutoloaderInitcfa2ae09e2de1083bc3e5ec5ac1c9ca7	vendor/composer/autoload_real.php	/^class ComposerAutoloaderInitcfa2ae09e2de1083bc3e5ec5ac1c9ca7$/;"	c
 Configurator	vendor/nette/bootstrap/src/Bootstrap/Configurator.php	/^class Configurator extends Object$/;"	c
 Connection	vendor/nette/database/src/Database/Connection.php	/^class Connection extends Nette\\Object$/;"	c
 ConnectionException	vendor/nette/database/src/Database/exceptions.php	/^class ConnectionException extends DriverException$/;"	c
@@ -96,6 +96,7 @@ CsrfProtection	vendor/nette/forms/src/Forms/Controls/CsrfProtection.php	/^class 
 DIExtension	vendor/nette/di/src/DI/Extensions/DIExtension.php	/^class DIExtension extends Nette\\DI\\CompilerExtension$/;"	c
 DataProvider	vendor/nette/tester/src/Framework/DataProvider.php	/^class DataProvider$/;"	c
 DatabaseExtension	vendor/nette/database/src/Bridges/DatabaseDI/DatabaseExtension.php	/^class DatabaseExtension extends Nette\\DI\\CompilerExtension$/;"	c
+DateInput	examples/custom_control.php	/^class DateInput extends Nette\\Forms\\Controls\\BaseControl$/;"	c
 DateInput	vendor/nette/forms/examples/custom-control.php	/^class DateInput extends Nette\\Forms\\Controls\\BaseControl$/;"	c
 DateTime	vendor/nette/utils/src/Utils/DateTime.php	/^class DateTime extends \\DateTime$/;"	c
 Debugger	vendor/tracy/tracy/src/Tracy/Debugger.php	/^class Debugger$/;"	c
@@ -417,6 +418,7 @@ __clone	vendor/nette/utils/src/Utils/Image.php	/^	public function __clone()$/;"	
 __construct	app/forms/SignFormFactory.php	/^	public function __construct(User $user)$/;"	f
 __construct	app/model/UserManager.php	/^	public function __construct(Nette\\Database\\Context $database)$/;"	f
 __construct	app/presenters/ErrorPresenter.php	/^	public function __construct(ILogger $logger)$/;"	f
+__construct	examples/custom_control.php	/^	public function __construct($label = NULL)$/;"	f
 __construct	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function __construct()$/;"	f
 __construct	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function __construct(Container_34df7d8e12 $container)$/;"	f
 __construct	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function __construct()$/;"	f
@@ -1501,7 +1503,7 @@ components	vendor/nette/application/src/Application/UI/PresenterComponentReflect
 components	vendor/nette/application/src/Application/UI/PresenterComponentReflection.php	/^		$components = array();$/;"	v
 components	vendor/nette/component-model/src/ComponentModel/Container.php	/^				$this->components = $tmp;$/;"	v
 components	vendor/nette/component-model/src/ComponentModel/Container.php	/^	private $components = array();$/;"	v
-composerRequiredf550ffe32f452fa479c9430cd5628c0	vendor/composer/autoload_real.php	/^function composerRequiredf550ffe32f452fa479c9430cd5628c0($file)$/;"	f
+composerRequirecfa2ae09e2de1083bc3e5ec5ac1c9ca7	vendor/composer/autoload_real.php	/^function composerRequirecfa2ae09e2de1083bc3e5ec5ac1c9ca7($file)$/;"	f
 condition	vendor/nette/database/src/Database/Table/SqlBuilder.php	/^				$condition = substr_replace($condition, $replace, $match[1][1], strlen($match[1][0]));$/;"	v
 condition	vendor/nette/database/src/Database/Table/SqlBuilder.php	/^			$condition = substr(str_repeat($conditionFragment, count($parameters)), 0, -4);$/;"	v
 condition	vendor/nette/database/src/Database/Table/SqlBuilder.php	/^		$condition = trim($condition);$/;"	v
@@ -1841,6 +1843,7 @@ createServiceNette__latte	temp/cache/Nette.Configurator/Container_34df7d8e12.php
 createServiceNette__latte	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createServiceNette__latte()$/;"	f
 createServiceRouting__router	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createServiceRouting__router()$/;"	f
 createServiceRouting__router	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createServiceRouting__router()$/;"	f
+createServiceSecurity__authorizator	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createServiceSecurity__authorizator()$/;"	f
 createServiceSecurity__authorizator	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createServiceSecurity__authorizator()$/;"	f
 createServiceSecurity__user	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createServiceSecurity__user()$/;"	f
 createServiceSecurity__user	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createServiceSecurity__user()$/;"	f
@@ -1854,9 +1857,9 @@ createServiceTracy__blueScreen	temp/cache/Nette.Configurator/Container_34df7d8e1
 createServiceTracy__blueScreen	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createServiceTracy__blueScreen()$/;"	f
 createServiceTracy__logger	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createServiceTracy__logger()$/;"	f
 createServiceTracy__logger	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createServiceTracy__logger()$/;"	f
-createService__25_App_Forms_SignFormFactory	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createService__25_App_Forms_SignFormFactory()$/;"	f
+createService__26_App_Forms_SignFormFactory	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createService__26_App_Forms_SignFormFactory()$/;"	f
 createService__26_App_Forms_SignFormFactory	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createService__26_App_Forms_SignFormFactory()$/;"	f
-createService__26_App_Model_UserManager	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createService__26_App_Model_UserManager()$/;"	f
+createService__27_App_Model_UserManager	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^	public function createService__27_App_Model_UserManager()$/;"	f
 createService__27_App_Model_UserManager	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^	public function createService__27_App_Model_UserManager()$/;"	f
 createTemplate	vendor/nette/application/src/Application/MicroPresenter.php	/^	public function createTemplate($class = NULL, $latteFactory = NULL)$/;"	f
 createTemplate	vendor/nette/application/src/Application/UI/Control.php	/^	protected function createTemplate()$/;"	f
@@ -1973,6 +1976,7 @@ database	vendor/dg/adminer-custom/plugins/plugin.php	/^	function database() {$/;
 databaseDefaults	vendor/nette/database/src/Bridges/DatabaseDI/DatabaseExtension.php	/^	public $databaseDefaults = array($/;"	v
 databases	vendor/dg/adminer-custom/plugins/plugin.php	/^	function databases($flush = true) {$/;"	f
 databasesPrint	vendor/dg/adminer-custom/plugins/plugin.php	/^	function databasesPrint($missing) {$/;"	f
+date	examples/custom_control.php	/^			$date = Nette\\Utils\\DateTime::from($value);$/;"	v
 date	vendor/latte/latte/src/Latte/Runtime/Filters.php	/^	public static function date($time, $format = NULL)$/;"	f
 date	vendor/nette/finder/src/Finder/Finder.php	/^		$date = DateTime::from($date)->format('U');$/;"	v
 date	vendor/nette/finder/src/Finder/Finder.php	/^	public function date($operator, $date = NULL)$/;"	f
@@ -1980,6 +1984,9 @@ date	vendor/nette/forms/examples/custom-control.php	/^			$date = Nette\\Utils\\D
 date	vendor/nette/http/src/Http/Response.php	/^	public static function date($time = NULL)$/;"	f
 date	vendor/nette/utils/src/Utils/DateTime.php	/^		$date = parent::createFromFormat($format, $time, $timezone);$/;"	v
 dateFormat	vendor/latte/latte/src/Latte/Runtime/Filters.php	/^	public static $dateFormat = '%x';$/;"	v
+day	examples/custom_control.php	/^			$this->day = $date->format('j');$/;"	v
+day	examples/custom_control.php	/^			$this->day = $this->month = $this->year = NULL;$/;"	v
+day	examples/custom_control.php	/^		$this->day = $this->getHttpData(Form::DATA_LINE, '[day]');$/;"	v
 day	vendor/nette/forms/examples/custom-control.php	/^			$this->day = $date->format('j');$/;"	v
 day	vendor/nette/forms/examples/custom-control.php	/^			$this->day = $this->month = $this->year = NULL;$/;"	v
 day	vendor/nette/forms/examples/custom-control.php	/^		$this->day = $this->getHttpData(Form::DATA_LINE, '[day]');$/;"	v
@@ -2651,6 +2658,7 @@ foreign	vendor/nette/database/src/Database/Conventions/StaticConventions.php	/^	
 foreignKeys	vendor/dg/adminer-custom/plugins/plugin.php	/^	function foreignKeys($table) {$/;"	f
 form	app/forms/SignFormFactory.php	/^		$form = new Form;$/;"	v
 form	app/presenters/SignPresenter.php	/^		$form = $this->factory->create();$/;"	v
+form	examples/custom_control.php	/^$form = new Form;$/;"	v
 form	vendor/nette/forms/examples/basic-example.php	/^$form = new Form;$/;"	v
 form	vendor/nette/forms/examples/bootstrap2-rendering.php	/^$form = new Form;$/;"	v
 form	vendor/nette/forms/examples/bootstrap3-rendering.php	/^$form = new Form;$/;"	v
@@ -2922,6 +2930,7 @@ getContents	vendor/nette/http/src/Http/FileUpload.php	/^	public function getCont
 getContext	vendor/latte/latte/src/Latte/Compiler.php	/^	public function getContext()$/;"	f
 getContext	vendor/nette/application/src/Application/MicroPresenter.php	/^	public function getContext()$/;"	f
 getContext	vendor/nette/application/src/Application/UI/Presenter.php	/^	public function getContext()$/;"	f
+getControl	examples/custom_control.php	/^	public function getControl()$/;"	f
 getControl	vendor/nette/forms/examples/custom-control.php	/^	public function getControl()$/;"	f
 getControl	vendor/nette/forms/src/Forms/Controls/BaseControl.php	/^	public function getControl()$/;"	f
 getControl	vendor/nette/forms/src/Forms/Controls/Button.php	/^	public function getControl($caption = NULL)$/;"	f
@@ -3419,6 +3428,7 @@ getUses	vendor/nette/php-generator/src/PhpGenerator/Method.php	/^	public functio
 getUses	vendor/nette/php-generator/src/PhpGenerator/PhpNamespace.php	/^	public function getUses()$/;"	f
 getValidationScope	vendor/nette/forms/src/Forms/Controls/SubmitButton.php	/^	public function getValidationScope()$/;"	f
 getValidationScope	vendor/nette/forms/src/Forms/ISubmitterControl.php	/^	function getValidationScope();$/;"	f
+getValue	examples/custom_control.php	/^	public function getValue()$/;"	f
 getValue	vendor/nette/forms/examples/custom-control.php	/^	public function getValue()$/;"	f
 getValue	vendor/nette/forms/src/Forms/Controls/BaseControl.php	/^	public function getValue()$/;"	f
 getValue	vendor/nette/forms/src/Forms/Controls/ChoiceControl.php	/^	public function getValue()$/;"	f
@@ -4228,6 +4238,7 @@ loadData	vendor/nette/tester/src/Framework/Environment.php	/^	public static func
 loadFile	vendor/nette/di/src/DI/ContainerLoader.php	/^	private function loadFile($class, $generator)$/;"	f
 loadFromFile	vendor/nette/database/src/Database/Helpers.php	/^	public static function loadFromFile(Connection $connection, $file)$/;"	f
 loadFromFile	vendor/nette/di/src/DI/CompilerExtension.php	/^	public function loadFromFile($file)$/;"	f
+loadHttpData	examples/custom_control.php	/^	public function loadHttpData()$/;"	f
 loadHttpData	vendor/nette/forms/examples/custom-control.php	/^	public function loadHttpData()$/;"	f
 loadHttpData	vendor/nette/forms/src/Forms/Controls/BaseControl.php	/^	public function loadHttpData()$/;"	f
 loadHttpData	vendor/nette/forms/src/Forms/Controls/ChoiceControl.php	/^	public function loadHttpData()$/;"	f
@@ -4596,11 +4607,14 @@ module	vendor/nette/application/src/Application/Routers/SimpleRouter.php	/^			$t
 module	vendor/nette/application/src/Application/Routers/SimpleRouter.php	/^	private $module = '';$/;"	v
 monitor	vendor/nette/component-model/src/ComponentModel/Component.php	/^	public function monitor($type)$/;"	f
 monitors	vendor/nette/component-model/src/ComponentModel/Component.php	/^	private $monitors = array();$/;"	v
+month	examples/custom_control.php	/^			$this->month = $date->format('n');$/;"	v
+month	examples/custom_control.php	/^		$this->month = $this->getHttpData(Form::DATA_LINE, '[month]');$/;"	v
 month	vendor/nette/forms/examples/custom-control.php	/^			$this->month = $date->format('n');$/;"	v
 month	vendor/nette/forms/examples/custom-control.php	/^		$this->month = $this->getHttpData(Form::DATA_LINE, '[month]');$/;"	v
 move	vendor/nette/http/src/Http/FileUpload.php	/^	public function move($dest)$/;"	f
 msg	vendor/nette/database/src/Database/Drivers/SqliteDriver.php	/^		$msg = $e->getMessage();$/;"	v
 n	vendor/nette/neon/src/Neon/Decoder.php	/^		$n = & $this->pos;$/;"	v
+name	examples/custom_control.php	/^		$name = $this->getHtmlName();$/;"	v
 name	vendor/dg/adminer-custom/plugins/plugin.php	/^	function name() {$/;"	f
 name	vendor/latte/latte/src/Latte/Compiler.php	/^			$name = $nPrefix$/;"	v
 name	vendor/latte/latte/src/Latte/Compiler.php	/^			$name = substr($token->name, strlen(Parser::N_PREFIX));$/;"	v
@@ -6246,7 +6260,8 @@ service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = ne
 service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = new Nette\\Http\\Session($this->getService('http.request'), $this->getService('http.response'));$/;"	v
 service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = new Nette\\Http\\UserStorage($this->getService('session.session'));$/;"	v
 service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = new Nette\\Mail\\SendmailMailer;$/;"	v
-service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = new Nette\\Security\\User($this->getService('security.userStorage'), $this->getService('26_App_Model_UserManager'));$/;"	v
+service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = new Nette\\Security\\Permission;$/;"	v
+service	temp/cache/Nette.Configurator/Container_34df7d8e12.php	/^		$service = new Nette\\Security\\User($this->getService('security.userStorage'), $this->getService('27_App_Model_UserManager'),$/;"	v
 service	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^		$service = $this->getService('http.requestFactory')->createHttpRequest();$/;"	v
 service	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^		$service = App\\RouterFactory::createRouter();$/;"	v
 service	temp/cache/Nette.Configurator/Container_6c46ff3e02.php	/^		$service = Tracy\\Debugger::getBar();$/;"	v
@@ -6501,6 +6516,7 @@ setUseIncludePath	vendor/composer/ClassLoader.php	/^    public function setUseIn
 setUser	vendor/nette/http/src/Http/Url.php	/^	public function setUser($value)$/;"	f
 setUses	vendor/nette/php-generator/src/PhpGenerator/Method.php	/^	public function setUses(array $val)$/;"	f
 setValidationScope	vendor/nette/forms/src/Forms/Controls/SubmitButton.php	/^	public function setValidationScope(\/*array*\/$scope = NULL)$/;"	f
+setValue	examples/custom_control.php	/^	public function setValue($value)$/;"	f
 setValue	vendor/nette/forms/examples/custom-control.php	/^	public function setValue($value)$/;"	f
 setValue	vendor/nette/forms/src/Forms/Controls/BaseControl.php	/^	public function setValue($value)$/;"	f
 setValue	vendor/nette/forms/src/Forms/Controls/Checkbox.php	/^	public function setValue($value)$/;"	f
@@ -7236,6 +7252,7 @@ validateChildComponent	vendor/nette/component-model/src/ComponentModel/Container
 validateConfig	vendor/nette/di/src/DI/CompilerExtension.php	/^	public function validateConfig(array $expected, array $config = NULL, $name = NULL)$/;"	f
 validateControl	vendor/nette/application/src/Application/UI/Control.php	/^	function validateControl($snippet = NULL)$/;"	f
 validateCsrf	vendor/nette/forms/src/Forms/Controls/CsrfProtection.php	/^	public static function validateCsrf(CsrfProtection $control)$/;"	f
+validateDate	examples/custom_control.php	/^	public static function validateDate(Nette\\Forms\\IControl $control)$/;"	f
 validateDate	vendor/nette/forms/examples/custom-control.php	/^	public static function validateDate(Nette\\Forms\\IControl $control)$/;"	f
 validateEmail	vendor/nette/forms/src/Forms/Validator.php	/^	public static function validateEmail(IControl $control)$/;"	f
 validateEqual	vendor/nette/forms/src/Forms/Validator.php	/^	public static function validateEqual(IControl $control, $arg)$/;"	f
@@ -7466,6 +7483,8 @@ xmlMode	vendor/latte/latte/src/Latte/Parser.php	/^	private $xmlMode;$/;"	v
 xpath	vendor/nette/tester/src/Framework/DomQuery.php	/^				$xpath = rtrim($xpath, '*') . $m[2];$/;"	v
 xpath	vendor/nette/tester/src/Framework/DomQuery.php	/^		$xpath = '\/\/*';$/;"	v
 y	vendor/tracy/tracy/examples/dump.php	/^	private $y = 'hello';$/;"	v
+year	examples/custom_control.php	/^			$this->year = $date->format('Y');$/;"	v
+year	examples/custom_control.php	/^		$this->year = $this->getHttpData(Form::DATA_LINE, '[year]');$/;"	v
 year	vendor/nette/forms/examples/custom-control.php	/^			$this->year = $date->format('Y');$/;"	v
 year	vendor/nette/forms/examples/custom-control.php	/^		$this->year = $this->getHttpData(Form::DATA_LINE, '[year]');$/;"	v
 z	vendor/tracy/tracy/examples/dump.php	/^	protected $z = 30;$/;"	v
