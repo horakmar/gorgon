@@ -23,9 +23,8 @@
     <!-- Custom styles for this template -->
     <link href="{$basePath}/css/main.css" rel="stylesheet">
     <link href="{$basePath}/css/theme.bootstrap.css" rel="stylesheet">
-
-	{ifset #datestyle}
-		{include datestyle}
+	{ifset #morestyle}
+		{include morestyle}
 	{/ifset}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -97,11 +96,10 @@
     <script src="{$basePath}/bootstrap3/assets/js/ie10-viewport-bug-workaround.js"></script>
 	<script src="{$basePath}/bootstrap3/assets/js/vendor/jquery.min.js"></script>
 	<script src="{$basePath}/bootstrap3/dist/js/bootstrap.min.js"></script>
-	{/block}
-
-	{ifset #datescripts}
-		{include datescripts}
+	{ifset #morescripts}
+		{include morescripts}
 	{/ifset}
+	{/block}
 
   </body>
 </html>

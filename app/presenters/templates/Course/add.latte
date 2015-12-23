@@ -1,35 +1,65 @@
 {block content}
 <h1 n:block=title>Nová trať</h1>
 
+<!-- <div id="debug">Ladici vystup</div> -->
+
 {form courseForm}
 <div class="row">
-	<div class="form-group required">
-		<div class="col-sm-1 control-label">{label name /}</div>
-		<div class="col-sm-3">{input name}</div>
-	</div>
-</div>
-<h3>Kontroly</h3>
-<div class="row">
 	<div class="col-sm-4">
+		<h3>Info</h3>
+		<div class="form-group">
+			{label name /}
+			{input name}
+			{label length /}
+			{input length}
+			{label climb /}
+			{input climb}
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<h3>Kontroly</span></h3>
 		<table class="formtable">
 		  <thead><tr>
 			<th>Pořadí</th>
 			<th>Kód</th>
 			<th>Typ</th>
-			<th>Sekce</th>
-			<th>Odebrat</th>
+			<th>Úsek</th>
+			<th>Akce</th>
 		  </tr></thead>
 		  <tbody>
 			{for $i = 1; $i <= $numcontrols; $i++ }
-			<tr>
-			  <td>K{$i}</td>
-			  <td><input id="k{$i}" type="text" size="3" maxlength="3" name="k[{$i}]"></td>
-			  <td><select name="type[{$i}]">
+			<tr class="CPcont">
+			  <td class="IDlabel">K{$i}</td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="CPcode[]"></td>
+			  <td><select name="CPtype[]">
 				<option value="regular">Běžná</option>
 				<option value="freeo">FreeO</option>
 			  </select></td>
-			  <td><input type="text" size="2" maxlength="2" name="sect[{$i}]"></td>
-			  <td><input type="checkbox" name="del[{$i}]"></td>
+			  <td><input type="text" size="2" maxlength="2" name="CPsect[]"></td>
+			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
+			</tr>
+			{/for}
+		  </tbody>
+		</table>
+	</div>
+	<div class="col-sm-4">
+		<h3>Bonusy</h3>
+		<table class="formtable">
+		  <thead><tr>
+			<th>Pořadí</th>
+			<th>Kód</th>
+			<th>Bonus</th>
+			<th>Úsek</th>
+			<th>Akce</th>
+		  </tr></thead>
+		  <tbody>
+			{for $i = 1; $i <= $numbonuses; $i++ }
+			<tr class="Bcont">
+			  <td class="IDlabel">B{$i}</td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="Bcode[]"></td>
+			  <td><input class="IDbonus" type="text" size="3" maxlength="3" name="Bdata[]"></td>
+			  <td><input type="text" size="2" maxlength="2" name="Bsect[]"></td>
+			  <td><span class="glyphicon glyphicon-plus addB"></span>&nbsp;<span class="glyphicon glyphicon-minus removeB"></span></td>
 			</tr>
 			{/for}
 		  </tbody>
@@ -39,3 +69,18 @@
 <hr>
 {input send} {input cancel}
 {/form}
+
+{define morestyle}
+<style>
+   .glyphicon-plus {
+       color: green; 
+   }
+   .glyphicon-minus {
+       color: red; 
+   }
+</style>
+{/define}
+
+{define morescripts}
+	<script src="{$basePath}/js/forms.js"></script>
+{/define}

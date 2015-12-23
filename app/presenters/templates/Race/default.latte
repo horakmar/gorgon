@@ -14,7 +14,7 @@
 	  </tr></thead>
 	  <tbody>
 		<tr n:foreach="$courses as $course">
-	      <td>{$course->name}</td>
+	      <td><a n:href="Course:edit $raceid,$course->id">{$course->name}</a></td>
 	      <td>{$course->length}</td>
 	      <td>{$course->climb}</td>
 	    </tr>
