@@ -72,18 +72,23 @@ class RaceManager extends Nette\Object {
 		$row = $this->database->table($course_table)->insert($course_val);
 		$courseid = $row->getPrimary();
 		$cp_course = []; $seq = 0;
-		foreach($cp_val['CPcode'] as $key => $val){
+		foreach($cp_val['cpcode'] as $key => $val){
+			if($key == 0) continue; 		// skip template value
 			if($val != ''){
-				$section = ($cp_val['CPsect'][$key] == '') ? 1 : $cp_val['CPsect'][$key];
-				if($cp_val['CPtype'][$key] == 'regular'){
-					$cp_seq= ++$seq;
-				}else{   // freeeo
-					$cp_seq = 0;
+				if($cp_val['cptype'][$key] == 'regular'){
+					$cpseq = ++$seq;
+				}else{
+					$cpseq = 0;
 				}
-				$cp_course[] = ['code' => $val, 'course_id' => $courseid, 'sequence' => $cp_seq, 'section' => $section, 'type' => $cp_val['CPtype'][$key]];
+				$cp_course[] = ['cpcode' => $val, 'sequence' => $cpseq,
+				  'course_id' => $courseid,
+				  'cptype' => $cp_val['cptype'][$key],
+				  'cpsect' => $cp_val['cpsect'][$key],
+				  'cpchange' => $cp_val['cpchange'][$key],
+				  'cpdata' => $cp_val['cpdata'][$key]];
 			}
 		}
-		Debugger::bardump($cp_course);
+		Debugger::bardump($cp_course, "Data to DB");
 		$this->database->table($cp_table)->insert($cp_course);
 	}
 }

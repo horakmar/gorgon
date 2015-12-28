@@ -1,42 +1,54 @@
-function addRow(obj, id){
-	sel = "." + id + "cont";
-	startTR = $(obj).closest(sel);
+function addRow(obj){
+	var startTR = $(obj).closest(".CPcont");
+	var newTR = $(".CPtemplate").clone(true).insertBefore(startTR);
+	$(newTR).removeClass("CPtemplate").addClass("CPcont");
 
-	newTR = $(startTR).clone(true).insertBefore(startTR);
-	$(newTR).find(".IDcode").val('');
-
-	Label = $(startTR).children().first().text();
-	LabPref = Label.slice(0,1);
-	Num = Number(Label.slice(1));
-
-//	$("#debug").text("addRow, " + sel + ", " + Num);
-	
-	$(newTR).nextAll().each(function(){
-		$(this).find(".IDlabel").text(LabPref + ++Num);
+	var Num = 0;
+	$(".CPtemplate").nextAll().each(function(){
+		$(this).find(".CPlabel").text("K" + ++Num);
 	});
 }
-function removeRow(obj, id){
-	startTR = $(obj).closest("." + id + "cont");
-	label = $(startTR).children().first().text();
+function removeRow(obj){
+	var startTR = $(obj).closest(".CPcont");
+	var label = $(startTR).children().first().text();
 	$(startTR).nextAll().each(function(){
-		labelObj = $(this).find(".IDlabel");
-		newlabel = $(labelObj).text();
+		var labelObj = $(this).find(".CPlabel");
+		var newlabel = $(labelObj).text();
 		$(labelObj).text(label);
 		label = newlabel;
 	});
     $(startTR).remove();
 }
+function setEnabled(obj){
+	var container = $(obj).closest(".CPcont");
+//	$("#debug").text($(obj).val());
+	switch($(obj).val()){
+	case "regular" :
+		$(container).find("[name='cpsect[]']").prop('disabled',true);
+		$(container).find("[name='cpchange[]']").prop('disabled',false);
+		$(container).find("[name='cpdata[]']").prop('disabled',true);
+		break;
+	case "freeo" :
+		$(container).find("[name='cpsect[]']").prop('disabled',false);
+		$(container).find("[name='cpchange[]']").prop('disabled',false);
+		$(container).find("[name='cpdata[]']").prop('disabled',true);
+		break;
+	case "bonus" :
+		$(container).find("[name='cpsect[]']").prop('disabled',false);
+		$(container).find("[name='cpchange[]']").prop('disabled',false);
+		$(container).find("[name='cpdata[]']").prop('disabled',false);
+		break;
+	};
+}
+function unDisable(){
+	$('[disabled]').prop('disabled', false);
+	return true;
+}
 $(document).ready(function(){
     $(".removeCP").click(function(){
-		removeRow(this, "CP");
+		removeRow(this);
 	});
     $(".addCP").click(function(){
-		addRow(this, "CP");
+		addRow(this);
 	});
-    $(".removeB").click(function(){
-		removeRow(this, "B");
-	});
-    $(".addB").click(function(){
-		addRow(this, "B");
-	});
-}); 
+});

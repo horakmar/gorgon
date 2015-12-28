@@ -1,7 +1,7 @@
 {block content}
 <h1 n:block=title>Nová trať</h1>
 
-<!-- <div id="debug">Ladici vystup</div> -->
+<div id="debug">Ladici vystup</div>
 
 {form courseForm}
 <div class="row">
@@ -16,7 +16,7 @@
 			{input climb}
 		</div>
 	</div>
-	<div class="col-sm-4">
+	<div class="col-sm-8">
 		<h3>Kontroly</span></h3>
 		<table class="formtable">
 		  <thead><tr>
@@ -24,49 +24,36 @@
 			<th>Kód</th>
 			<th>Typ</th>
 			<th>Úsek</th>
+			<th>Změna</th>
+			<th>Data</th>
 			<th>Akce</th>
 		  </tr></thead>
 		  <tbody>
-			{for $i = 1; $i <= $numcontrols; $i++ }
-			<tr class="CPcont">
-			  <td class="IDlabel">K{$i}</td>
-			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="CPcode[]"></td>
-			  <td><select name="CPtype[]">
+			{for $i = 0; $i <= $numcontrols; $i++ }
+			<tr n:class="$i == 0 ? CPtemplate : CPcont">
+			  <td class="CPlabel">K{$i}</td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]"></td>
+			  <td><select name="cptype[]" onchange="setEnabled(this)">
 				<option value="regular">Běžná</option>
 				<option value="freeo">FreeO</option>
+				<option value="bonus">Bonus</option>
 			  </select></td>
-			  <td><input type="text" size="2" maxlength="2" name="CPsect[]"></td>
+			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" disabled></td>
+ 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]"></td>
+			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" disabled></td>
 			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
 			</tr>
 			{/for}
-		  </tbody>
-		</table>
-	</div>
-	<div class="col-sm-4">
-		<h3>Bonusy</h3>
-		<table class="formtable">
-		  <thead><tr>
-			<th>Pořadí</th>
-			<th>Kód</th>
-			<th>Bonus</th>
-			<th>Úsek</th>
-			<th>Akce</th>
-		  </tr></thead>
-		  <tbody>
-			{for $i = 1; $i <= $numbonuses; $i++ }
-			<tr class="Bcont">
-			  <td class="IDlabel">B{$i}</td>
-			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="Bcode[]"></td>
-			  <td><input class="IDbonus" type="text" size="3" maxlength="3" name="Bdata[]"></td>
-			  <td><input type="text" size="2" maxlength="2" name="Bsect[]"></td>
-			  <td><span class="glyphicon glyphicon-plus addB"></span>&nbsp;<span class="glyphicon glyphicon-minus removeB"></span></td>
+			<tr class="CPcont">			
+			  <td colspan="6"></td>
+			  <td><span class="glyphicon glyphicon-plus addCP"></span></td>
 			</tr>
-			{/for}
 		  </tbody>
 		</table>
 	</div>
 </div>
 <hr>
+<button type="button" onclick="unDisable()">Povolit</button>
 {input send} {input cancel}
 {/form}
 

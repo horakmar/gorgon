@@ -30,7 +30,8 @@ class CoursePresenter extends BasePresenter
 			->setRequired('Název je povinný');
 		$form->addText('length', 'Délka tratě:');
 		$form->addText('climb', 'Stoupání:');
-		$form->addSubmit('send', 'OK');
+		$form->addSubmit('send', 'OK')
+			->setAttribute('onclick', 'unDisable()');
 		$form->addSubmit('cancel', 'Zpět')
 			->setValidationScope(false)
 		    ->onClick[] = [$this, 'formCancelled'];
@@ -41,9 +42,11 @@ class CoursePresenter extends BasePresenter
 	}
 
 	public function courseFormSucceeded($form, $course_val){
-		$cp_val['CPcode'] = $form->getHttpData($form::DATA_LINE, 'CPcode[]');
-		$cp_val['CPtype'] = $form->getHttpData($form::DATA_LINE, 'CPtype[]');
-		$cp_val['CPsect'] = $form->getHttpData($form::DATA_LINE, 'CPsect[]');
+		$cp_val['cpcode'] = $form->getHttpData($form::DATA_LINE, 'cpcode[]');
+		$cp_val['cptype'] = $form->getHttpData($form::DATA_LINE, 'cptype[]');
+		$cp_val['cpsect'] = $form->getHttpData($form::DATA_LINE, 'cpsect[]');
+		$cp_val['cpchange'] = $form->getHttpData($form::DATA_LINE, 'cpchange[]');
+		$cp_val['cpdata'] = $form->getHttpData($form::DATA_LINE, 'cpdata[]');
 		$this->manager->putCourse($this->raceid, $course_val, $cp_val);
 		$this->redirect("Race:", $this->raceid);
 	}
