@@ -23,3 +23,13 @@ div.flash {
 	display: None;
 }
 
+.glyphicon-plus {
+    color: green; 
+}
+.glyphicon-edit {
+	color: blue;
+}
+.glyphicon-minus, .glyphicon-remove {
+    color: red; 
+}
+

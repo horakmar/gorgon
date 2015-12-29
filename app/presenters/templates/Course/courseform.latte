@@ -1,5 +1,5 @@
 {block content}
-<h1 n:block=title>Nová trať</h1>
+<h1 n:block=title>{$title}</h1>
 
 <div id="debug">Ladici vystup</div>
 
@@ -29,18 +29,18 @@
 			<th>Akce</th>
 		  </tr></thead>
 		  <tbody>
-			{for $i = 0; $i <= $numcontrols; $i++ }
-			<tr n:class="$i == 0 ? CPtemplate : CPcont">
+			{for $i = 0; $i <= $numcp; $i++ }
+			<tr n:class="$i == 0 ? CPtemplate, CPcont">
 			  <td class="CPlabel">K{$i}</td>
-			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]"></td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpcode']"></td>
 			  <td><select name="cptype[]" onchange="setEnabled(this)">
-				<option value="regular">Běžná</option>
-				<option value="freeo">FreeO</option>
-				<option value="bonus">Bonus</option>
+				<option value="regular" n:attr="selected => $i > 0 && isset($cp) && $cp[$i-1]['cptype'] == 'regular'">Běžná</option>
+				<option value="freeo" n:attr="selected => $i > 0 && isset($cp) && $cp[$i-1]['cptype'] == 'freeo'">FreeO</option>
+				<option value="bonus" n:attr="selected => $i > 0 && isset($cp) && $cp[$i-1]['cptype'] == 'bonus'">Bonus</option>
 			  </select></td>
-			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" disabled></td>
- 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]"></td>
-			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" disabled></td>
+			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpsect']"></td>
+ 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpchange']"></td>
+			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpdata']"></td>
 			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
 			</tr>
 			{/for}
@@ -53,21 +53,11 @@
 	</div>
 </div>
 <hr>
-<button type="button" onclick="unDisable()">Povolit</button>
 {input send} {input cancel}
 {/form}
-
-{define morestyle}
-<style>
-   .glyphicon-plus {
-       color: green; 
-   }
-   .glyphicon-minus {
-       color: red; 
-   }
-</style>
-{/define}
 
 {define morescripts}
 	<script src="{$basePath}/js/forms.js"></script>
 {/define}
+
+

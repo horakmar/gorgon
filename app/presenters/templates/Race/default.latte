@@ -11,12 +11,14 @@
 	    <th>Název</th>
 	    <th>Délka</th>
 	    <th>Stoupání</th>
+		<th></th>
 	  </tr></thead>
 	  <tbody>
 		<tr n:foreach="$courses as $course">
 	      <td><a n:href="Course:edit $raceid,$course->id">{$course->name}</a></td>
 	      <td>{$course->length}</td>
-	      <td>{$course->climb}</td>
+		  <td>{$course->climb}</td>
+		  <td><a n:href="Course:delete $raceid,$course->id"><span class="glyphicon  glyphicon-remove"></span></a>
 	    </tr>
 	  </tbody>
 	</table>

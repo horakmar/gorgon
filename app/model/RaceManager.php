@@ -66,11 +66,33 @@ class RaceManager extends Nette\Object {
 		return $this->database->table($raceid . '__entry');
 	}
 
-	public function putCourse($raceid, $course_val, $cp_val) {
+	public function getCourse($raceid, $courseid) {
+		$course_table = $raceid . "__course";
+		$row = $this->database->table($course_table)->get($courseid);
+		return $row->toArray();
+	}
+	
+	public function getCourseCP($raceid, $courseid) {
+		$cp_table = $raceid . "__course_cp";
+		$table = $this->database->table($cp_table)->where('course_id', $courseid)->order('cptype, sequence');
+		$values = [];
+		foreach($table as $row){
+			$values[] = $row->toArray();
+		}
+		return $values;
+	}
+
+	public function putCourse($raceid, $courseid, $course_val, $cp_val) {
 		$course_table = $raceid . "__course";
 		$cp_table = $raceid . "__course_cp";
-		$row = $this->database->table($course_table)->insert($course_val);
-		$courseid = $row->getPrimary();
+
+		if($courseid){
+			$this->database->table($course_table)->get($courseid)->update($course_val);
+			$this->database->table($cp_table)->where('course_id', $courseid)->delete();
+		}else{
+			$row = $this->database->table($course_table)->insert($course_val);
+			$courseid = $row->getPrimary();
+		}
 		$cp_course = []; $seq = 0;
 		foreach($cp_val['cpcode'] as $key => $val){
 			if($key == 0) continue; 		// skip template value
@@ -90,5 +112,13 @@ class RaceManager extends Nette\Object {
 		}
 		Debugger::bardump($cp_course, "Data to DB");
 		$this->database->table($cp_table)->insert($cp_course);
+	}
+	
+	public function delCourse($raceid, $courseid) {
+		$course_table = $raceid . "__course";
+		$cp_table = $raceid . "__course_cp";
+
+		$this->database->table($cp_table)->where('course_id', $courseid)->delete();
+		$this->database->table($course_table)->get($courseid)->delete();
 	}
 }

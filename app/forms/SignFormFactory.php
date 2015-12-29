@@ -29,9 +29,9 @@ class SignFormFactory extends Nette\Object
 
 		$form->addGroup();
 		$form->addText('username', 'Login:')
-			->setRequired('Please enter your username.');
+			->setRequired('Zadejte prosím uživatelské jméno.');
 		$form->addPassword('password', 'Heslo:')
-			->setRequired('Please enter your password.');
+			->setRequired('Zadejte prosím heslo.');
 
 		$form->addCheckbox('remember', 'Zůstat přihlášen');
 
