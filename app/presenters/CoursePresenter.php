@@ -13,6 +13,14 @@ class CoursePresenter extends BaseRacePresenter
 	/** @persistent */
 	public $courseid = NULL;
 
+	/** @inject @var \App\Model\Course */
+	public $course;
+
+	public function startup(){
+		parent::startup();
+		$this->course->setCourse($this->raceid, $this->courseid);
+	}
+
 	public function createComponentCourseForm() {
 		$form = new Form;
 		$form->addText('name', 'Název tratě:')
@@ -48,12 +56,13 @@ class CoursePresenter extends BaseRacePresenter
 		$cp_val['cpsect'] = $form->getHttpData($form::DATA_LINE, 'cpsect[]');
 		$cp_val['cpchange'] = $form->getHttpData($form::DATA_LINE, 'cpchange[]');
 		$cp_val['cpdata'] = $form->getHttpData($form::DATA_LINE, 'cpdata[]');
-		$this->manager->putCourse($this->courseid, $course_val, $cp_val);
+		$this->course->create($this->courseid, $course_val, $cp_val);
+		$this->course->save();
 		$this->redirect("Course:list");
 	}
 
 	public function courseDeleteSucceeded($form, $val){
-		$this->manager->delCourse($this->courseid);
+		$this->course->delete();
 		$this->redirect("Course:list");
 	}
 
@@ -61,21 +70,21 @@ class CoursePresenter extends BaseRacePresenter
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
 		$this->template->numcp = 4;
 		$this->template->title = "Nová trať";
+		$this->courseid = NULL;
 	}
 
 	public function renderEdit($courseid){
-		$coursedata = $this->manager->getCourse($courseid);
+		$coursedata = $this->course->load($courseid);
+		Debugger::bardump($coursedata);
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
-		$this->template->cp = $this->manager->getCourseCP($courseid);
+		$this->template->cp = $this->course->course_cp;
 		$this->template->numcp = count($this->template->cp);
-		$this['courseForm']->setDefaults($coursedata);
-		Debugger::bardump($this->template->cp);
+		$this['courseForm']->setDefaults($this->course->course);
 		$this->template->title = "Upravit trať";
 	}
 
 	public function renderDelete($courseid){
-		$this->template->course = $this->manager->getCourse($courseid);
-		$this->template->cps = $this->manager->getCourseCP($courseid);
+		$this->template->course = $this->course->load($courseid);
 	}
 
 	public function renderList() {

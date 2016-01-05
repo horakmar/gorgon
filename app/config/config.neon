@@ -23,6 +23,7 @@ services:
 	- App\Model\UserManager
 	- App\Forms\SignFormFactory
 	- App\Model\RaceManager
+	- App\Model\Course
 	router: App\RouterFactory::createRouter
 
 latte:
