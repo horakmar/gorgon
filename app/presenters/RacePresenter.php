@@ -5,27 +5,12 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
-use App\Model\RaceManager;
 use Tracy\Debugger;
 
-class RacePresenter extends BasePresenter
+class RacePresenter extends BaseRacePresenter
 {
-   /** @persistent */
-    public $raceid;
-
-	/** @var RaceManager */
-	private $manager;
-
-	public function injectSignFormFactory(RaceManager $service) {
-		$this->manager = $service;
-	}
-
-	public function __construct()
-	{
-	}
 
 	public function createComponentAddRaceForm() {
-
 
 		$validator = function($item){
 			return $this->manager->freeRaceid($item->value);
@@ -59,11 +44,12 @@ class RacePresenter extends BasePresenter
 	}
 
 	public function renderDefault($raceid) {
-		$this->template->raceid = $raceid;
-		$this->template->race = $this->manager->getRaceInfo($raceid);
-		$this->template->courses = $this->manager->listCourses($raceid);
-		$this->template->categories = $this->manager->listCategories($raceid);
-		$this->template->entries = $this->manager->listEntries($raceid);
+		$this->raceid = $raceid;
+		$this->template->raceid = $this->raceid;
+		$this->template->race = $this->manager->getRaceInfo();
+		$this->template->courses = $this->manager->listCourses();
+		$this->template->categories = $this->manager->listCategories();
+		$this->template->entries = $this->manager->listEntries();
 	}
 
 	public function formCancelled() {

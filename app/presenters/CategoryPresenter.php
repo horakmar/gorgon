@@ -5,50 +5,48 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
-use App\Model\RaceManager;
 use Tracy\Debugger;
 
-class CategoryPresenter extends BasePresenter
+class CategoryPresenter extends BaseRacePresenter
 {
-   /** @persistent */
-    public $raceid;
 
-	/** @var RaceManager */
-	private $manager;
+	/** @var array */
+//	private $courses;
 
-	public function injectSignFormFactory(RaceManager $service) {
-		$this->manager = $service;
-	}
-
-	public function __construct()
-	{
-	}
-
-	public function createComponentAddCategoryForm() {
+	public function createComponentCategoryForm() {
 		$form = new Form;
-		$form->addText('name', 'Název:')
-			->setRequired('Název je povinný');
-		$form->addSelect('course', 'Trať',
-			$manager->listCourses($raceid));
-		$form->addSubmit('send', 'OK');
-		$form->addSubmit('cancel', 'Zpět')
-			->setValidationScope(false)
-		    ->onClick[] = [$this, 'formCancelled'];
-
-		$form->onSuccess[] = [$this, 'addCategoryFormSucceeded'];
+		for($i = 0; $i <= $this->template->numcat; $i++) {
+			$form->addText('name' . $i, 'Název');
+			$form->addSelect('course' . $i, 'Trať',
+				$this->manager->listCourses()->fetchPairs('id','name'));
+		}
+		$form->addSubmit('send', 'OK')
+			->getControlPrototype()->addClass('btn-primary');
+		$cancel = $form->addSubmit('cancel', 'Zpět')
+			->setValidationScope(false);
+		$cancel->onClick[] = [$this, 'formCancelled'];
+		$cancel->getControlPrototype()->addClass('btn-default');
+		
+		$form->onSuccess[] = [$this, 'categoryFormSucceeded'];
 		$form->setRenderer(new Bs3FormRenderer);
 		return $form;
 	}
 
-	public function addCategoryFormSucceeded($form, $values){
+	public function categoryFormSucceeded($form, $values){
 		$this->manager->addCategory($values);
 		$this->redirect('Race:');
 	}
 
-	public function renderDefault($raceid) {
-		$this->template->raceid = $raceid;
-		$this->template->race = $this->manager->getRaceInfo($raceid);
-		$this->template->categories = $this->manager->listCategories($raceid);
+	public function renderAdd(){
+		$this->template->setFile(__DIR__. "/templates/Category/categoryform.latte");
+		$this->template->numcat = 5;
+		$this->template->title = "Kategorie";
+	}
+
+	public function renderDefault() {
+		$this->template->raceid = $this->raceid;
+		$this->template->race = $this->manager->getRaceInfo();
+		$this->template->categories = $this->manager->listCategories();
 	}
 
 	public function formCancelled() {

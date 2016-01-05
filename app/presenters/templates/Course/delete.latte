@@ -1,3 +1,13 @@
 {block content}
-<h1 n:block=title>Smazat {$course['name']}</h1>
+<h1 n:block=title>Smazat trať</h1>
+
+<div class="row">
+	<div class="col-sm-4">
+		<table class="table" style="background-color: #eeeeee"><tbody>
+		<tr><td>Název:</td><td> {$course['name']}</td></tr>
+		<tr><td>Délka:</td><td> {$course['length']}</td></tr>
+		<tr><td>Stoupání:</td><td> {$course['climb']}</td></tr>
+		<tr><td>Kontroly:</td><td> {foreach $cps as $cp} {$cp['cpcode']}{sep}, {/sep} {/foreach}</td></tr>
+		</tbody></table>
 {control courseDeleteConfirm}
+</div>

@@ -1,0 +1,21 @@
+{block content}
+<h1 n:block=title>Tratě pro závod {$raceid}</h1>
+
+<table class="table table-striped table-hover">
+  <thead><tr>
+	<th>Název</th>
+	<th>Délka</th>
+	<th>Stoupání</th>
+	<th></th>
+  </tr></thead>
+  <tbody>
+	<tr n:foreach="$courses as $course">
+	  <td><a n:href="Course:edit $course->id">{$course->name}</a></td>
+	  <td>{$course->length}</td>
+	  <td>{$course->climb}</td>
+	  <td><a n:href="Course:delete $course->id"><span class="glyphicon  glyphicon-remove"></span></a>
+	</tr>
+  </tbody>
+</table>
+<p><a n:href="Course:add" class="btn btn-default" role="button">Přidat trať</a></p>
+<a n:href="Race:" class="btn btn-primary" role="button">Zpět</a></p>

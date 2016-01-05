@@ -5,27 +5,13 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
-use App\Model\RaceManager;
 use Tracy\Debugger;
 
-class CoursePresenter extends BasePresenter
+class CoursePresenter extends BaseRacePresenter
 {
-    /** @persistent */
-    public $raceid;
 
 	/** @persistent */
-	public $courseid;
-
-	/** @var RaceManager */
-	private $manager;
-
-	public function injectSignFormFactory(RaceManager $service) {
-		$this->manager = $service;
-	}
-
-	public function __construct()
-	{
-	}
+	public $courseid = NULL;
 
 	public function createComponentCourseForm() {
 		$form = new Form;
@@ -62,46 +48,44 @@ class CoursePresenter extends BasePresenter
 		$cp_val['cpsect'] = $form->getHttpData($form::DATA_LINE, 'cpsect[]');
 		$cp_val['cpchange'] = $form->getHttpData($form::DATA_LINE, 'cpchange[]');
 		$cp_val['cpdata'] = $form->getHttpData($form::DATA_LINE, 'cpdata[]');
-		if(! isset($this->courseid)) {
-			$this->courseid = NULL;
-		}
-		$this->manager->putCourse($this->raceid, $this->courseid, $course_val, $cp_val);
-		$this->redirect("Race:", $this->raceid);
+		$this->manager->putCourse($this->courseid, $course_val, $cp_val);
+		$this->redirect("Course:list");
 	}
 
 	public function courseDeleteSucceeded($form, $val){
-		$this->manager->delCourse($this->raceid, $this->courseid);
-		$this->redirect("Race:", $this->raceid);
+		$this->manager->delCourse($this->courseid);
+		$this->redirect("Course:list");
 	}
 
-	public function renderAdd($raceid){
+	public function renderAdd(){
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
 		$this->template->numcp = 4;
 		$this->template->title = "Nová trať";
 	}
 
-	public function renderEdit($raceid, $courseid){
-		$coursedata = $this->manager->getCourse($raceid, $courseid);
+	public function renderEdit($courseid){
+		$coursedata = $this->manager->getCourse($courseid);
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
-		$this->template->cp = $this->manager->getCourseCP($raceid, $courseid);
+		$this->template->cp = $this->manager->getCourseCP($courseid);
 		$this->template->numcp = count($this->template->cp);
 		$this['courseForm']->setDefaults($coursedata);
 		Debugger::bardump($this->template->cp);
 		$this->template->title = "Upravit trať";
 	}
 
-	public function renderDelete($raceid, $courseid){
-		$this->template->course = $this->manager->getCourse($raceid, $courseid);
+	public function renderDelete($courseid){
+		$this->template->course = $this->manager->getCourse($courseid);
+		$this->template->cps = $this->manager->getCourseCP($courseid);
 	}
 
-	public function renderDefault($raceid) {
-		$this->template->raceid = $raceid;
-		$this->template->race = $this->manager->getRaceInfo($raceid);
-		$this->template->courses = $this->manager->listCourses($raceid);
+	public function renderList() {
+		$this->template->raceid = $this->raceid;
+		$this->template->race = $this->manager->getRaceInfo();
+		$this->template->courses = $this->manager->listCourses();
 	}
 
 	public function formCancelled() {
-		$this->redirect("Race:", $this->raceid);
+		$this->redirect("Course:list");
 	}
 
 }
