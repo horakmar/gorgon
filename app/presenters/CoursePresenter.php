@@ -10,15 +10,17 @@ use Tracy\Debugger;
 class CoursePresenter extends BaseRacePresenter
 {
 
-	/** @persistent */
-	public $courseid = NULL;
-
-	/** @inject @var \App\Model\Course */
+	/** @var \App\Model\Course */
 	public $course;
+	
+	public function __construct(\App\Model\RaceManager $raceman, \App\Model\Course $course) {
+		parent::__construct($raceman);
+		$this->course = $course;
+	}
 
 	public function startup(){
 		parent::startup();
-		$this->course->setCourse($this->raceid, $this->courseid);
+		$this->course->setCourse($this->raceid);
 	}
 
 	public function createComponentCourseForm() {
@@ -56,13 +58,13 @@ class CoursePresenter extends BaseRacePresenter
 		$cp_val['cpsect'] = $form->getHttpData($form::DATA_LINE, 'cpsect[]');
 		$cp_val['cpchange'] = $form->getHttpData($form::DATA_LINE, 'cpchange[]');
 		$cp_val['cpdata'] = $form->getHttpData($form::DATA_LINE, 'cpdata[]');
-		$this->course->create($this->courseid, $course_val, $cp_val);
+		$this->course->create($this->getParameter('courseid'), $course_val, $cp_val);
 		$this->course->save();
 		$this->redirect("Course:list");
 	}
 
 	public function courseDeleteSucceeded($form, $val){
-		$this->course->delete();
+		$this->course->delete($this->getParameter('courseid'));
 		$this->redirect("Course:list");
 	}
 
@@ -70,7 +72,6 @@ class CoursePresenter extends BaseRacePresenter
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
 		$this->template->numcp = 4;
 		$this->template->title = "Nová trať";
-		$this->courseid = NULL;
 	}
 
 	public function renderEdit($courseid){

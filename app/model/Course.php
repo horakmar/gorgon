@@ -32,10 +32,9 @@ class Course extends Nette\Object {
 		$this->database = $database;
 	}
 
-	public function setCourse($raceid = NULL, $courseid = NULL) {
+	public function setCourse($raceid = NULL) {
 		$this->cp_table = $this->database->table($raceid . self::CP_TABLE_SUFF);
 		$this->crs_table = $this->database->table($raceid . self::CRS_TABLE_SUFF);
-		$this->course['id'] = $courseid;
 	}
 
 	public function load($courseid) {
@@ -50,7 +49,7 @@ class Course extends Nette\Object {
 	public function create($courseid, $course_val, $cp_val){
 		$this->course = $course_val;
 		$this->course['id'] = $courseid;
-		
+
 		$seq = 0;
 		foreach($cp_val['cpcode'] as $key => $val){
 			if($key == 0) continue; 		// skip template value
@@ -84,8 +83,8 @@ class Course extends Nette\Object {
 		$this->cp_table->insert($this->course_cp);
 	}
 	
-	public function delete() {
-		$this->cp_table->where('course_id', $this->course['id'])->delete();
-		$this->crs_table->get($this->course['id'])->delete();
+	public function delete($courseid) {
+		$this->cp_table->where('course_id', $courseid)->delete();
+		$this->crs_table->get($courseid)->delete();
 	}
 }
