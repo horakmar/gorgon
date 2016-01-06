@@ -10,6 +10,8 @@ use Tracy\Debugger;
 class CoursePresenter extends BaseRacePresenter
 {
 
+	const NUMCP_NEW = 5;
+
 	/** @var \App\Model\Course */
 	public $course;
 	
@@ -58,8 +60,7 @@ class CoursePresenter extends BaseRacePresenter
 		$cp_val['cpsect'] = $form->getHttpData($form::DATA_LINE, 'cpsect[]');
 		$cp_val['cpchange'] = $form->getHttpData($form::DATA_LINE, 'cpchange[]');
 		$cp_val['cpdata'] = $form->getHttpData($form::DATA_LINE, 'cpdata[]');
-		$this->course->create($this->getParameter('courseid'), $course_val, $cp_val);
-		$this->course->save();
+		$this->course->save($this->getParameter('courseid'), $course_val, $cp_val);
 		$this->redirect("Course:list");
 	}
 
@@ -70,18 +71,20 @@ class CoursePresenter extends BaseRacePresenter
 
 	public function renderAdd(){
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
-		$this->template->numcp = 4;
+		$this->template->cp = [];
+		for($i = 0; $i < self::NUMCP_NEW; $i++){
+			$this->template->cp[] = [];
+		}
 		$this->template->title = "Nová trať";
 	}
 
 	public function renderEdit($courseid){
-		$coursedata = $this->course->load($courseid);
-		Debugger::bardump($coursedata);
+		$course = $this->course->load($courseid);
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
 		$this->template->cp = $this->course->course_cp;
-		$this->template->numcp = count($this->template->cp);
 		$this['courseForm']->setDefaults($this->course->course);
 		$this->template->title = "Upravit trať";
+		Debugger::bardump($this->template->cp);
 	}
 
 	public function renderDelete($courseid){

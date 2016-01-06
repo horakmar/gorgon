@@ -17,7 +17,7 @@
 		</div>
 	</div>
 	<div class="col-sm-8">
-		<h3>Kontroly</span></h3>
+		<h3>Kontroly</h3>
 		<table class="formtable">
 		  <thead><tr>
 			<th>Pořadí</th>
@@ -29,22 +29,35 @@
 			<th>Akce</th>
 		  </tr></thead>
 		  <tbody>
-			{for $i = 0; $i <= $numcp; $i++ }
-			<tr n:class="$i == 0 ? CPtemplate, CPcont">
-			  <td class="CPlabel">K{$i}</td>
-			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpcode']"></td>
+			<tr class="Ctemplate Ccont">
+			  <td class="CPlabel">K0</td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]"></td>
 			  <td><select name="cptype[]" onchange="setEnabled(this)">
-				<option value="regular" n:attr="selected => $i > 0 && isset($cp) && $cp[$i-1]['cptype'] == 'regular'">Běžná</option>
-				<option value="freeo" n:attr="selected => $i > 0 && isset($cp) && $cp[$i-1]['cptype'] == 'freeo'">FreeO</option>
-				<option value="bonus" n:attr="selected => $i > 0 && isset($cp) && $cp[$i-1]['cptype'] == 'bonus'">Bonus</option>
+				<option value="regular">Běžná</option>
+				<option value="freeo">FreeO</option>
+				<option value="bonus">Bonus</option>
 			  </select></td>
-			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpsect']"></td>
- 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpchange']"></td>
-			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" n:attr="value => $i > 0 && isset($cp) ? $cp[$i-1]['cpdata']"></td>
+			  <td><input type="text" size="2" maxlength="2" name="cpsect[]"></td>
+ 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]"></td>
+			  <td><input type="text" size="4" maxlength="4" name="cpdata[]"></td>
 			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
 			</tr>
-			{/for}
-			<tr class="CPcont">			
+			{foreach $cp as $icp}
+			<tr class="Ccont">
+			  <td class="CPlabel">K{$iterator->counter}</td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]" n:attr="value => isset($icp['cpcode']) ? $icp['cpcode']"></td>
+			  <td><select name="cptype[]" onchange="setEnabled(this)">
+				<option value="regular" n:attr="selected => isset($icp['cptype']) ? $icp['cptype'] == 'regular'">Běžná</option>
+				<option value="freeo" n:attr="selected => isset($icp['cptype']) ? $icp['cptype'] == 'freeo'">FreeO</option>
+				<option value="bonus" n:attr="selected => isset($icp['cptype']) ? $icp['cptype'] == 'bonus'">Bonus</option>
+			  </select></td>
+			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" n:attr="value => isset($icp['cpsect']) ? $icp['cpsect']"></td>
+ 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]" n:attr="value => isset($icp['cpchange']) ? $icp['cpchange']"></td>
+			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" n:attr="value => isset($icp['cpdata']) ? $icp['cpdata']"></td>
+			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
+			</tr>
+			{/foreach}
+			<tr class="Ccont">			
 			  <td colspan="6"></td>
 			  <td><span class="glyphicon glyphicon-plus addCP"></span></td>
 			</tr>

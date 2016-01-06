@@ -24,7 +24,7 @@
 	</table>
   </div>
   <div class="col-sm-4">
-	<h3>Kategorie</h3>
+	<a n:href="Category:list"><h3>Kategorie</h3></a>
     <table class="table table-striped table-hover">
       <thead><tr>
 	    <th>Název</th>
@@ -33,11 +33,10 @@
 	  <tbody>
 		<tr n:foreach="$categories as $cat">
 	      <td>{$cat->name}</td>
-	      <td>{$cat->coursename}</td>
+	      <td>{$cat->course_id}</td>
 	    </tr>
 	  </tbody>
 	</table>
-	<a n:href="Category:add">Přidat kategorii</a>
   </div>
   <div class="col-sm-4">
     <h3>Závodníci</h3>

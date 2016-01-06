@@ -18,14 +18,16 @@ class Course extends Nette\Object {
 	private $database;
 
 	/** @var Nette\Database\Table\Selection */
-	private $crs_table;
+	private $crs_table, $cp_table;
 
-	/** @var Nette\Database\Table\Selection */
-	private $cp_table;
+	/** @var string */
+	private $cp_table_name;
 
-	/** @var array */
-	public $course = [];
-	public $course_cp = [];
+	/** @var Nette\Database\Table\ActiveRow */
+	public $course;
+
+	/** @var Nette\Database\Table\GroupedSelection */
+	public $course_cp;
 
 	public function __construct(Nette\Database\Context $database)
 	{
@@ -33,24 +35,26 @@ class Course extends Nette\Object {
 	}
 
 	public function setCourse($raceid = NULL) {
-		$this->cp_table = $this->database->table($raceid . self::CP_TABLE_SUFF);
+		$this->cp_table_name = $raceid . self::CP_TABLE_SUFF;
+		$this->cp_table = $this->database->table($this->cp_table_name);
 		$this->crs_table = $this->database->table($raceid . self::CRS_TABLE_SUFF);
 	}
 
 	public function load($courseid) {
-		$this->course = $this->crs_table->get($courseid)->toArray();
-		$result = $this->cp_table->where('course_id', $courseid)->order('cptype, sequence');
-		foreach($result as $row){
-			$this->course_cp[] = $row->toArray();
-		}
+		$this->course = $this->crs_table->get($courseid);
+		$this->course_cp = $this->course->related($this->cp_table_name, 'course_id')->order('cptype, sequence');
 		return $this;
 	}
 
-	public function create($courseid, $course_val, $cp_val){
-		$this->course = $course_val;
-		$this->course['id'] = $courseid;
-
+	public function save($courseid, $course_val, $cp_val){
+		if($courseid){
+			$this->crs_table->get($courseid)->update($course_val);
+			$this->cp_table->where('course_id', $courseid)->delete();
+		}else{
+			$courseid = $this->crs_table->insert($course_val)->getPrimary();
+		}
 		$seq = 0;
+		$course_cp = [];
 		foreach($cp_val['cpcode'] as $key => $val){
 			if($key == 0) continue; 		// skip template value
 			if($val != ''){
@@ -59,7 +63,7 @@ class Course extends Nette\Object {
 				}else{
 					$cpseq = 0;
 				}
-				$this->course_cp[] = ['cpcode' => $val, 'sequence' => $cpseq,
+				$course_cp[] = ['cpcode' => $val, 'sequence' => $cpseq,
 				  'course_id' => $courseid,
 				  'cptype' => $cp_val['cptype'][$key],
 				  'cpsect' => $cp_val['cpsect'][$key],
@@ -67,22 +71,9 @@ class Course extends Nette\Object {
 				  'cpdata' => $cp_val['cpdata'][$key]];
 			}
 		}
+		$this->cp_table->insert($course_cp);
 	}
 
-	public function save() {
-		if($this->course['id']){
-			$this->crs_table->get($this->course['id'])->update($this->course);
-			$this->cp_table->where('course_id', $this->course['id'])->delete();
-		}else{
-			unset($this->course['id']);
-			$this->course['id'] = $this->crs_table->insert($this->course)->getPrimary();
-		}
-		foreach($this->course_cp as &$cp){
-			$cp['course_id'] = $this->course['id'];
-		}
-		$this->cp_table->insert($this->course_cp);
-	}
-	
 	public function delete($courseid) {
 		$this->cp_table->where('course_id', $courseid)->delete();
 		$this->crs_table->get($courseid)->delete();

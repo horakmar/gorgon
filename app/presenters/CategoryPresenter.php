@@ -10,16 +10,21 @@ use Tracy\Debugger;
 class CategoryPresenter extends BaseRacePresenter
 {
 
-	/** @var array */
-//	private $courses;
+	/** @var \App\Model\Category */
+	private $category;
+	
+	public function __construct(\App\Model\RaceManager $raceman, \App\Model\Category $category) {
+		parent::__construct($raceman);
+		$this->category = $category;
+	}
 
-	public function createComponentCategoryForm() {
+	public function startup(){
+		parent::startup();
+		$this->category->setCategory($this->raceid);
+	}
+
+	public function createComponentAddCategoryForm() {
 		$form = new Form;
-		for($i = 0; $i <= $this->template->numcat; $i++) {
-			$form->addText('name' . $i, 'Název');
-			$form->addSelect('course' . $i, 'Trať',
-				$this->manager->listCourses()->fetchPairs('id','name'));
-		}
 		$form->addSubmit('send', 'OK')
 			->getControlPrototype()->addClass('btn-primary');
 		$cancel = $form->addSubmit('cancel', 'Zpět')
@@ -27,30 +32,38 @@ class CategoryPresenter extends BaseRacePresenter
 		$cancel->onClick[] = [$this, 'formCancelled'];
 		$cancel->getControlPrototype()->addClass('btn-default');
 		
-		$form->onSuccess[] = [$this, 'categoryFormSucceeded'];
+		$form->onSuccess[] = [$this, 'addCategoryFormSucceeded'];
 		$form->setRenderer(new Bs3FormRenderer);
 		return $form;
 	}
 
-	public function categoryFormSucceeded($form, $values){
-		$this->manager->addCategory($values);
-		$this->redirect('Race:');
+	public function addCategoryFormSucceeded($form, $values){
+		$cat_val['name'] = $form->getHttpData($form::DATA_LINE, 'name[]');
+		$cat_val['course_id'] = $form->getHttpData($form::DATA_LINE, 'course_id[]');
+
+		$this->category->save($this->getParameter('catid'), $cat_val);
+		$this->redirect('Category:list');
 	}
 
-	public function renderAdd(){
-		$this->template->setFile(__DIR__. "/templates/Category/categoryform.latte");
-		$this->template->numcat = 5;
-		$this->template->title = "Kategorie";
+	public function renderAdd($numcat){
+		$this->template->numcat = $numcat;
+		$this->template->courses = $this->manager->listCourses()->fetchPairs('id','name');
 	}
 
-	public function renderDefault() {
+	public function renderEdit($catid){
+	}
+
+	public function renderDelete($catid){
+	}
+
+	public function renderList() {
 		$this->template->raceid = $this->raceid;
 		$this->template->race = $this->manager->getRaceInfo();
 		$this->template->categories = $this->manager->listCategories();
 	}
 
 	public function formCancelled() {
-		$this->redirect('Race:');
+		$this->redirect('Category:list');
 	}
 
 }

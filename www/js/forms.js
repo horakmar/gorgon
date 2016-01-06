@@ -1,26 +1,30 @@
-function addRow(obj){
-	var startTR = $(obj).closest(".CPcont");
-	var newTR = $(".CPtemplate").clone(true).insertBefore(startTR);
-	$(newTR).removeClass("CPtemplate");
+function addRow(obj, type){
+	var startTR = $(obj).closest(".Ccont");
+	var newTR = $(".Ctemplate").clone(true).insertBefore(startTR);
+	$(newTR).removeClass("Ctemplate");
 
-	var Num = 0;
-	$(".CPtemplate").nextAll().each(function(){
-		$(this).find(".CPlabel").text("K" + ++Num);
-	});
+	if(type == 'cp'){
+		var Num = 0;
+		$(".Ctemplate").nextAll().each(function(){
+			$(this).find(".CPlabel").text("K" + ++Num);
+		});
+	}
 }
-function removeRow(obj){
-	var startTR = $(obj).closest(".CPcont");
+function removeRow(obj, type){
+	var startTR = $(obj).closest(".Ccont");
 	var label = $(startTR).children().first().text();
-	$(startTR).nextAll().each(function(){
-		var labelObj = $(this).find(".CPlabel");
-		var newlabel = $(labelObj).text();
-		$(labelObj).text(label);
-		label = newlabel;
-	});
+	if(type == 'cp'){
+		$(startTR).nextAll().each(function(){
+			var labelObj = $(this).find(".CPlabel");
+			var newlabel = $(labelObj).text();
+			$(labelObj).text(label);
+			label = newlabel;
+		});
+	}
     $(startTR).remove();
 }
 function setEnabled(obj){
-	var container = $(obj).closest(".CPcont");
+	var container = $(obj).closest(".Ccont");
 //	$("#debug").text($(obj).val());
 	switch($(obj).val()){
 	case "freeo" :
@@ -51,10 +55,16 @@ function unDisable(){
 }
 $(document).ready(function(){
     $(".removeCP").click(function(){
-		removeRow(this);
+		removeRow(this, 'cp');
 	});
     $(".addCP").click(function(){
-		addRow(this);
+		addRow(this, 'cp');
+	});
+    $(".removeCat").click(function(){
+		removeRow(this, 'cat');
+	});
+    $(".addCat").click(function(){
+		addRow(this, 'cat');
 	});
 	setEnabledAll();
 });
