@@ -32,7 +32,7 @@
 	  </tr></thead>
 	  <tbody>
 		<tr n:foreach="$categories as $cat">
-	      <td>{$cat->name}</td>
+	      <td><a n:href="Category:edit $cat->id">{$cat->name}</a></td>
 	      <td>{($cat->course_id) ? $cat->course->name}</td>
 	    </tr>
 	  </tbody>
