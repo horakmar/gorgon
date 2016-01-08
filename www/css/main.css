@@ -14,6 +14,10 @@ div.flash {
 	margin: 1em 0;
 }
 
+.formtable {
+	margin-bottom: 10px;
+}
+
 .formtable td,th {
 	padding: 1px 5px 1px 5px;
 	height: 30px;

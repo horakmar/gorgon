@@ -1,0 +1,16 @@
+{block content}
+<h1 n:block=title>Upravit kategorii</h1>
+
+{form editCategoryForm}
+	<table class="formtable">
+	  <thead><tr>
+		<th>Kategorie</th>
+		<th>Trať</th>
+		<th></th>
+	  </tr></thead>
+	  <tbody><tr>
+		<td>{input name}</td><td>{input course_id}</td>
+	  </tr></tbody>
+	  </table>
+	<p>{input send} {input cancel}</p>
+{/form}

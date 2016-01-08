@@ -75,7 +75,6 @@ class Course extends Nette\Object {
 	}
 
 	public function delete($courseid) {
-		$this->cp_table->where('course_id', $courseid)->delete();
 		$this->crs_table->get($courseid)->delete();
 	}
 }

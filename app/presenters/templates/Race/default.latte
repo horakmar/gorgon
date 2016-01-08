@@ -33,7 +33,7 @@
 	  <tbody>
 		<tr n:foreach="$categories as $cat">
 	      <td>{$cat->name}</td>
-	      <td>{$cat->course_id}</td>
+	      <td>{($cat->course_id) ? $cat->course->name}</td>
 	    </tr>
 	  </tbody>
 	</table>

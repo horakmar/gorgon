@@ -1,0 +1,16 @@
+{block content}
+<div class="row">
+	<div class="col-sm-4">
+		<div class="panel panel-danger">
+			<div class="panel-heading" n:block=title><b>Smazat závod</b></div>
+			<div class="panel-body">
+				<table class="table"><tr>
+				<td>Název:</td><td><b>{$race->name}</b></td>
+				</tr><tr>
+				<td>Popis:</td><td>{$race->descr}</td>
+				</tr></table>
+				{control raceDeleteConfirm}
+			</div>
+		</div>
+	</div>
+</div>

@@ -38,11 +38,26 @@ class RacePresenter extends BaseRacePresenter
 		return $form;
 	}
 
+	public function createComponentRaceDeleteConfirm() {
+		$form = new Form;
+		$form->addSubmit('cancel', 'Zpět')
+			->onClick[] = [$this, 'formCancelled'];
+		$form->addSubmit('send', 'OK');
+		$form->onSuccess[] = [$this, 'raceDeleteSucceeded'];
+		$form->setRenderer(new Bs3FormRenderer);
+		return $form;
+	}
+
 	public function addRaceFormSucceeded($form, $values){
 		$this->manager->addRace($values);
 		$this->redirect('Main:');
 	}
 
+	public function raceDeleteSucceeded($form, $val){
+		$this->manager->delRace($this->getParameter('raceid'));
+		$this->redirect("Main:");
+	}
+	
 	public function renderDefault($raceid) {
 		$this->raceid = $raceid;
 		$this->template->raceid = $this->raceid;
@@ -51,6 +66,12 @@ class RacePresenter extends BaseRacePresenter
 		$this->template->categories = $this->manager->listCategories();
 		$this->template->entries = $this->manager->listEntries();
 	}
+
+	public function renderDelete($raceid) {
+		$this->raceid = $raceid;
+		$this->template->race = $this->manager->getRaceInfo();
+	}
+
 
 	public function formCancelled() {
 		$this->redirect('Main:');
