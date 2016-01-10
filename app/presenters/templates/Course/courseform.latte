@@ -42,18 +42,18 @@
 			  <td><input type="text" size="4" maxlength="4" name="cpdata[]"></td>
 			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
 			</tr>
-			{foreach $cp as $icp}
+			{foreach $cps as $cp}
 			<tr class="Ccont">
 			  <td class="CPlabel">K{$iterator->counter}</td>
-			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]" n:attr="value => isset($icp['cpcode']) ? $icp['cpcode']"></td>
+			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]" n:attr="value => isset($cp['cpcode']) ? $cp['cpcode']"></td>
 			  <td><select name="cptype[]" onchange="setEnabled(this)">
-				<option value="regular" n:attr="selected => isset($icp['cptype']) ? $icp['cptype'] == 'regular'">Běžná</option>
-				<option value="freeo" n:attr="selected => isset($icp['cptype']) ? $icp['cptype'] == 'freeo'">FreeO</option>
-				<option value="bonus" n:attr="selected => isset($icp['cptype']) ? $icp['cptype'] == 'bonus'">Bonus</option>
+				<option value="regular" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 'regular'">Běžná</option>
+				<option value="freeo" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 'freeo'">FreeO</option>
+				<option value="bonus" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 'bonus'">Bonus</option>
 			  </select></td>
-			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" n:attr="value => isset($icp['cpsect']) ? $icp['cpsect']"></td>
- 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]" n:attr="value => isset($icp['cpchange']) ? $icp['cpchange']"></td>
-			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" n:attr="value => isset($icp['cpdata']) ? $icp['cpdata']"></td>
+			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" n:attr="value => isset($cp['cpsect']) ? $cp['cpsect']"></td>
+ 			  <td><input type="text" size="2" maxlength="2" name="cpchange[]" n:attr="value => isset($cp['cpchange']) ? $cp['cpchange']"></td>
+			  <td><input type="text" size="4" maxlength="4" name="cpdata[]" n:attr="value => isset($cp['cpdata']) ? $cp['cpdata']"></td>
 			  <td><span class="glyphicon glyphicon-plus addCP"></span>&nbsp;<span class="glyphicon glyphicon-minus removeCP"></span></td>
 			</tr>
 			{/foreach}

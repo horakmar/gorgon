@@ -25,6 +25,7 @@ services:
 	- App\Model\RaceManager
 	- App\Model\Course
 	- App\Model\Category
+	- App\Model\Entry
 	router: App\RouterFactory::createRouter
 
 latte:

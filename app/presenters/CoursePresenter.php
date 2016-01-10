@@ -22,7 +22,7 @@ class CoursePresenter extends BaseRacePresenter
 
 	public function startup(){
 		parent::startup();
-		$this->course->setCourse($this->raceid);
+		$this->course->setRace($this->raceid);
 	}
 
 	public function createComponentCourseForm() {
@@ -71,9 +71,9 @@ class CoursePresenter extends BaseRacePresenter
 
 	public function renderAdd(){
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
-		$this->template->cp = [];
+		$this->template->cps = [];
 		for($i = 0; $i < self::NUMCP_NEW; $i++){
-			$this->template->cp[] = [];
+			$this->template->cps[] = [];
 		}
 		$this->template->title = "Nová trať";
 	}
@@ -81,20 +81,20 @@ class CoursePresenter extends BaseRacePresenter
 	public function renderEdit($courseid){
 		$course = $this->course->load($courseid);
 		$this->template->setFile(__DIR__. "/templates/Course/courseform.latte");
-		$this->template->cp = $this->course->course_cp;
-		$this['courseForm']->setDefaults($this->course->course);
+		$this['courseForm']->setDefaults($course);
+		$this->template->cps = $this->course->loadCPs($course);
 		$this->template->title = "Upravit trať";
-		Debugger::bardump($this->template->cp);
 	}
 
 	public function renderDelete($courseid){
 		$this->template->course = $this->course->load($courseid);
+		$this->template->cps = $this->course->loadCPs($this->template->course);
 	}
 
 	public function renderList() {
 		$this->template->raceid = $this->raceid;
 		$this->template->race = $this->manager->getRaceInfo();
-		$this->template->courses = $this->manager->listCourses();
+		$this->template->courses = $this->course->listAll();
 	}
 
 	public function formCancelled() {

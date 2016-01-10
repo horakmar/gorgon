@@ -16,6 +16,11 @@ class RacePresenter extends BaseRacePresenter
 			return $this->manager->freeRaceid($item->value);
 		};
 
+		$race_type = [
+			'training' => 'Trénink',
+			'race'     => 'Závod'
+		];
+
 		$form = new Form;
 		$form->addText('raceid', 'ID závodu:')
 			->setRequired('ID závodu je povinné')
@@ -24,9 +29,7 @@ class RacePresenter extends BaseRacePresenter
 		$form->addText('name', 'Název:');
 		$form->addDateTimePicker('datetime_0', 'Datum a čas:')
 			->setRequired('Datum a čas jsou povinné.');
-		$form->addSelect('type', 'Typ závodu',
-			array('training' => 'Trénink',
-			      'race'     => 'Závod'));
+		$form->addSelect('type', 'Typ závodu', $race_type);
 		$form->addTextArea('descr', 'Popis:');
 		$form->addSubmit('send', 'OK');
 		$form->addSubmit('cancel', 'Zpět')

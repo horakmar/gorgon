@@ -20,7 +20,7 @@ class CategoryPresenter extends BaseRacePresenter
 
 	public function startup(){
 		parent::startup();
-		$this->category->setCategory($this->raceid);
+		$this->category->setRace($this->raceid);
 	}
 
 	public function createComponentAddCategoryForm() {
@@ -41,7 +41,7 @@ class CategoryPresenter extends BaseRacePresenter
 		$form = new Form;
 		$form->addText('name', 'Kategorie')
 			->setRequired('Název kategorie je povinný');
-		$form->addSelect('course_id', 'Trať', $this->manager->listCourses()->fetchPairs('id','name'));
+		$form->addSelect('course_id', 'Trať', $this->course->listAll()->fetchPairs('id','name'));
 		$form->addSubmit('send', 'OK')
 			->getControlPrototype()->addClass('btn-primary');
 		$cancel = $form->addSubmit('cancel', 'Zpět')

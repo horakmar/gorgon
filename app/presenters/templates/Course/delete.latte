@@ -5,10 +5,10 @@
 			<div class="panel-heading" n:block=title><b>Smazat trať</b></div>
 			<div class="panel-body">
 				<table class="table"><tbody>
-				<tr><td>Název:</td><td> {$course->course['name']}</td></tr>
-				<tr><td>Délka:</td><td> {$course->course['length']}</td></tr>
-				<tr><td>Stoupání:</td><td> {$course->course['climb']}</td></tr>
-				<tr><td>Kontroly:</td><td> {foreach $course->course_cp as $cp} {$cp['cpcode']}{sep}, {/sep} {/foreach}</td></tr>
+				<tr><td>Název:</td><td> {$course['name']}</td></tr>
+				<tr><td>Délka:</td><td> {$course['length']}</td></tr>
+				<tr><td>Stoupání:</td><td> {$course['climb']}</td></tr>
+				<tr><td>Kontroly:</td><td> {foreach $cps as $cp} {$cp['cpcode']}{sep}, {/sep} {/foreach}</td></tr>
 				</tbody></table>
 				{control courseDeleteConfirm}
 			</div>

@@ -2,39 +2,23 @@
 
 namespace App\Model;
 
-use Nette;
 use Tracy\Debugger;
 
 
 /**
- * Users management.
+ * Category management.
  */
-class Category extends Nette\Object {
-
-	const CAT_TABLE_SUFF = '__category';
-	const ENTRY_TABLE_SUFF = '__entry';
-
-	/** @var Nette\Database\Context */
-	private $database;
-
-	/** @var string */
-	private $cat_table_name, $entry_table_name;
+class Category extends BaseModel {
 
 	/** @var Nette\Database\Table\ActiveRow */
-	public $category;
+	private $category;
 
-	public function __construct(Nette\Database\Context $database)
-	{
-		$this->database = $database;
-	}
-
-	public function setCategory($raceid = NULL) {
-		$this->cat_table_name = $raceid . self::CAT_TABLE_SUFF;
-		$this->entry_table_name = $raceid . self::ENTRY_TABLE_SUFF;
+	public function listAll() {
+		return $this->database->table($this->raceid . parent::CATEGORY_TABLE_SUFF);
 	}
 
 	public function load($catid) {
-		return $this->database->table($this->cat_table_name)->get($catid);
+		return $this->listAll()->get($catid);
 	}
 
 	public function insert($cat_val){
@@ -47,7 +31,7 @@ class Category extends Nette\Object {
 				 ];
 			}
 		}
-		$this->database->table($this->cat_table_name)->insert($insert_val);
+		$this->listAll()->insert($insert_val);
 	}
 
 	public function update($catid, $cat_val){
@@ -55,11 +39,11 @@ class Category extends Nette\Object {
 	}
 
 	public function isDeletable($catid){
-		return ($this->database->table($this->entry_table_name)
+		return ($this->database->table($this->$raceid . parent::ENTRY_TABLE_SUFF)
 			->where('category_id', $catid)->count() > 0) ? false : true;
 	}
 
 	public function delete($catid) {
-		$this->database->table($this->cat_table_name)->get($catid)->delete();
+		$this->load($catid)->delete();
 	}
 }

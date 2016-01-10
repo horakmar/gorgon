@@ -2,56 +2,33 @@
 
 namespace App\Model;
 
-use Nette;
 use Tracy\Debugger;
 
 
 /**
  * Users management.
  */
-class Course extends Nette\Object {
+class Course extends BaseModel {
 
-	const CRS_TABLE_SUFF = '__course';
-	const CP_TABLE_SUFF = '__course_cp';
-
-	/** @var Nette\Database\Context */
-	private $database;
-
-	/** @var Nette\Database\Table\Selection */
-	private $crs_table, $cp_table;
-
-	/** @var string */
-	private $cp_table_name;
-
-	/** @var Nette\Database\Table\ActiveRow */
-	public $course;
-
-	/** @var Nette\Database\Table\GroupedSelection */
-	public $course_cp;
-
-	public function __construct(Nette\Database\Context $database)
-	{
-		$this->database = $database;
-	}
-
-	public function setCourse($raceid = NULL) {
-		$this->cp_table_name = $raceid . self::CP_TABLE_SUFF;
-		$this->cp_table = $this->database->table($this->cp_table_name);
-		$this->crs_table = $this->database->table($raceid . self::CRS_TABLE_SUFF);
+	public function listAll() {
+		return $this->database->table($this->raceid . parent::COURSE_TABLE_SUFF);
 	}
 
 	public function load($courseid) {
-		$this->course = $this->crs_table->get($courseid);
-		$this->course_cp = $this->course->related($this->cp_table_name, 'course_id')->order('cptype, sequence');
-		return $this;
+		return $this->listAll()->get($courseid);
+	}
+
+	public function loadCPs($course) {
+		return $course->related($this->raceid . parent::CP_TABLE_SUFF, 'course_id')->order('cptype, sequence');
 	}
 
 	public function save($courseid, $course_val, $cp_val){
 		if($courseid){
-			$this->crs_table->get($courseid)->update($course_val);
-			$this->cp_table->where('course_id', $courseid)->delete();
+			$course = $this->load($courseid);
+			$this->loadCPs($course)->delete();
+			$course->update($course_val);
 		}else{
-			$courseid = $this->crs_table->insert($course_val)->getPrimary();
+			$courseid = $this->listAll()->insert($course_val)->getPrimary();
 		}
 		$seq = 0;
 		$course_cp = [];
@@ -71,10 +48,12 @@ class Course extends Nette\Object {
 				  'cpdata' => $cp_val['cpdata'][$key]];
 			}
 		}
-		$this->cp_table->insert($course_cp);
+		if(count($course_cp) > 0){
+			$this->database->table($this->raceid . parent::CP_TABLE_SUFF)->insert($course_cp);
+		}
 	}
 
 	public function delete($courseid) {
-		$this->crs_table->get($courseid)->delete();
+		$this->load($courseid)->delete();
 	}
 }
