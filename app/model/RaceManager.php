@@ -9,26 +9,11 @@ use Tracy\Debugger;
 /**
  * Users management.
  */
-class RaceManager extends Nette\Object {
+class Race extends BaseModel {
 
 	const MAIN_TABLE = 'g__race';
 	const RACE_TABLES = 'best_splits course course_cp category entry read read_punch results splits';
 	const TEMPLATE_PREFIX = 't';
-
-	/** @var Nette\Database\Context */
-	private $database;
-
-	/** @var raceid */
-	private $raceid;
-
-	public function __construct(Nette\Database\Context $database)
-	{
-		$this->database = $database;
-	}
-
-	public function setRaceID($raceid = NULL) {
-		$this->raceid = $raceid;
-	}
 
 	public function addRace($values) {
 		foreach(explode(' ', self::RACE_TABLES) as $tb){
@@ -77,26 +62,24 @@ class RaceManager extends Nette\Object {
 			->where('raceid', $raceid)->count() == 0);
 	}
 
-	public function listRaces() {
+	public function listAll() {
 		return $this->database->table(self::MAIN_TABLE);
 	}
 
 	public function getRaceInfo() {
-		$race = $this->database->table(self::MAIN_TABLE)
-			->where('raceid', $this->raceid)->fetch();
-		return $race;
+		return $this->listAll()->where('raceid', $this->raceid)->fetch();
 	}
 
 	public function listCourses() {
-		return $this->database->table($this->raceid . '__course');
+		return $this->database->table($this->raceid . parent::COURSE_TABLE_SUFF);
 	}
 
 	public function listCategories() {
-		return $this->database->table($this->raceid . '__category');
+		return $this->database->table($this->raceid . parent::CATEGORY_TABLE_SUFF);
 	}
 
 	public function listEntries() {
-		return $this->database->table($this->raceid . '__entry');
+		return $this->database->table($this->raceid . parent::ENTRY_TABLE_SUFF);
 	}
 
 }

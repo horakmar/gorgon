@@ -26,9 +26,9 @@ class Entry extends BaseModel {
 		}
 	}
 
-	public function isDeletable($entryid){
+	public function countReferences($entryid){
 		// TODO
-		return true;
+		return 0;
 	}
 
 	public function delete($entryid) {

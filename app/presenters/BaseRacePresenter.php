@@ -14,15 +14,15 @@ abstract class BaseRacePresenter extends BasePresenter
     public $raceid = NULL;
 
 	/** @var RaceManager */
-	protected $manager;
+	protected $race;
 
-	public function __construct(\App\Model\RaceManager $service) {
-		$this->manager = $service;
+	public function __construct(\App\Model\Race $service) {
+		$this->race = $service;
 	}
 
 	public function startup() {
 		parent::startup();
-		$this->manager->setRaceID($this->raceid);
+		$this->race->setRace($this->raceid);
 	}
 
 }

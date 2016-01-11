@@ -32,7 +32,7 @@
 	  </tr></thead>
 	  <tbody>
 		<tr n:foreach="$categories as $cat">
-	      <td><a n:href="Category:edit $cat->id">{$cat->name}</a></td>
+	      <td><a n:href="Category:list $cat->id">{$cat->name}</a></td>
 	      <td>{($cat->course_id) ? $cat->course->name}</td>
 	    </tr>
 	  </tbody>
@@ -42,13 +42,13 @@
     <a n:href="Entry:list"><h3>Závodníci</h3></a>
     <table class="table table-striped table-hover">
       <thead><tr>
-	    <th>SI</th>
 	    <th>Jméno</th>
+	    <th>SI</th>
 	  </tr></thead>
 	  <tbody>
 		<tr n:foreach="$entries as $entry">
+	      <td>{$entry->lname} {$entry->nick} {$entry->fname}</td>
 	      <td>{$entry->si_number}</td>
-	      <td>{$entry->lname} {$entry->fname}</td>
 	    </tr>
 	  </tbody>
 	</table>

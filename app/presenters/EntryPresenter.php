@@ -20,8 +20,8 @@ class EntryPresenter extends BaseRacePresenter
 	/** @var \App\Model\Entry */
 	private $entry;
 	
-	public function __construct(\App\Model\RaceManager $raceman, \App\Model\Entry $entry) {
-		parent::__construct($raceman);
+	public function __construct(\App\Model\Race $race, \App\Model\Entry $entry) {
+		parent::__construct($race);
 		$this->entry = $entry;
 	}
 
@@ -37,7 +37,7 @@ class EntryPresenter extends BaseRacePresenter
 		$form->addText('nick', 'Nick');
 		$form->addText('registration', 'Reg.');
 		$form->addText('si_number', 'SI');
-		$form->addSelect('category_id', 'Kategorie', $this->manager->listCategories()->fetchPairs('id','name'));
+		$form->addSelect('category_id', 'Kategorie', $this->race->listCategories()->fetchPairs('id','name'));
 		$form->addText('start', 'Start');
 		$form->addSelect('start_opt', 'Volby', self::$start_options);
 		$form->addSubmit('send', 'Zapsat')
@@ -52,19 +52,17 @@ class EntryPresenter extends BaseRacePresenter
 		$this->redirect('Entry:list');
 	}
 
-	public function actionDelete($entryid){
-		if($this->entry->isDeletable($entryid)){
+	public function renderDelete($entryid){
+		$this->template->countref = $this->entry->countReferences($entryid);
+		if($this->template->countref == 0){
 			$this->entry->delete($entryid);
 			$this->redirect('Entry:list');
 		}
 	}
 
-	public function renderDelete($catid){
-	}
-
 	public function renderList($entryid = NULL) {
 		$this->template->raceid = $this->raceid;
-		$this->template->entries = $this->entry->listAll();
+		$this->template->entries = $this->entry->listAll()->order('lname');
 		$this->template->addFilter('startopt', function($s){
         	return self::$start_options[$s];
 		});

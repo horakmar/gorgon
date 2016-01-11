@@ -1,0 +1,15 @@
+{block content}
+<div class="row">
+	<div class="col-sm-4">
+		<div class="panel panel-danger">
+			<div class="panel-heading" n:block=title><b>Smazat kategorii</b></div>
+			<div class="panel-body">
+				<table class="table"><tbody>
+				<tr><td>Název:</td><td>{$category['name']}</td></tr>
+				<tr><td>Použita v přihláškách:</td><td>{$refcount} x</td></tr>
+				</tbody></table>
+				{control categoryDeleteConfirm}
+			</div>
+		</div>
+	</div>
+</div>

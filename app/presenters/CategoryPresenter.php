@@ -13,8 +13,8 @@ class CategoryPresenter extends BaseRacePresenter
 	/** @var \App\Model\Category */
 	private $category;
 	
-	public function __construct(\App\Model\RaceManager $raceman, \App\Model\Category $category) {
-		parent::__construct($raceman);
+	public function __construct(\App\Model\Race $race, \App\Model\Category $category) {
+		parent::__construct($race);
 		$this->category = $category;
 	}
 
@@ -23,79 +23,61 @@ class CategoryPresenter extends BaseRacePresenter
 		$this->category->setRace($this->raceid);
 	}
 
-	public function createComponentAddCategoryForm() {
-		$form = new Form;
-		$form->addSubmit('send', 'OK')
-			->getControlPrototype()->addClass('btn-primary');
-		$cancel = $form->addSubmit('cancel', 'Zpět')
-			->setValidationScope(false);
-		$cancel->onClick[] = [$this, 'formCancelled'];
-		$cancel->getControlPrototype()->addClass('btn-default');
-		
-		$form->onSuccess[] = [$this, 'addCategoryFormSucceeded'];
-		$form->setRenderer(new Bs3FormRenderer);
-		return $form;
-	}
-
-	public function createComponentEditCategoryForm() {
+	public function createComponentCategoryForm() {
 		$form = new Form;
 		$form->addText('name', 'Kategorie')
 			->setRequired('Název kategorie je povinný');
-		$form->addSelect('course_id', 'Trať', $this->course->listAll()->fetchPairs('id','name'));
+		$form->addSelect('course_id', 'Trať', $this->race->listCourses()->fetchPairs('id','name'));
 		$form->addSubmit('send', 'OK')
 			->getControlPrototype()->addClass('btn-primary');
-		$cancel = $form->addSubmit('cancel', 'Zpět')
-			->setValidationScope(false);
-		$cancel->onClick[] = [$this, 'formCancelled'];
-		$cancel->getControlPrototype()->addClass('btn-default');
-		
-		$form->onSuccess[] = [$this, 'editCategoryFormSucceeded'];
+		$form->onSuccess[] = [$this, 'categoryFormSucceeded'];
 		$form->setRenderer(new Bs3FormRenderer);
 		return $form;
 	}
 
-	public function editCategoryFormSucceeded($form, $values){
+	public function createComponentCategoryDeleteConfirm() {
+		$form = new Form;
+		$form->addSubmit('cancel', 'Zpět')
+			->onClick[] = [$this, 'formCancelled'];
+		$form->addSubmit('send', 'OK');
+		$form->onSuccess[] = [$this, 'categoryDeleteSucceeded'];
+		$form->setRenderer(new Bs3FormRenderer);
+		return $form;
+	}
+
+	public function categoryDeleteSucceeded($form, $val){
+		$this->category->delete($this->getParameter('catid'));
+		$this->redirect('Category:list');
+	}
+
+	public function categoryFormSucceeded($form, $values){
 		$this->category->update($this->getParameter('catid'), $values);
 		$this->redirect('Category:list');
 	}
 
-	public function addCategoryFormSucceeded($form, $values){
-		$cat_val['name'] = $form->getHttpData($form::DATA_LINE, 'name[]');
-		$cat_val['course_id'] = $form->getHttpData($form::DATA_LINE, 'course_id[]');
-
-		$this->category->insert($cat_val);
-		$this->redirect('Category:list');
-	}
-
-	public function renderAdd($numcat){
-		$this->template->numcat = $numcat;
-		$this->template->courses = $this->manager->listCourses()->fetchPairs('id','name');
-	}
-
-	public function renderEdit($catid = 0){
-		$form = $this['editCategoryForm'];
-		$cat = $this->category->load($catid);
-		if (!$cat) {
-			$this->error('Záznam nenalezen!');
-		}
-		Debugger::bardump($cat);
-		$form->setDefaults($cat);
-	}
-
-	public function actionDelete($catid){
-		if($this->category->isDeletable($catid)){
+	public function renderDelete($catid){
+		$this->template->refcount = $this->category->countReferences($catid);
+		if($this->template->refcount == 0){
 			$this->category->delete($catid);
 			$this->redirect('Category:list');
+		}else{
+			$this->template->category = $this->category->load($catid);
 		}
 	}
 
-	public function renderDelete($catid){
-	}
-
-	public function renderList() {
+	public function renderList($catid = NULL) {
 		$this->template->raceid = $this->raceid;
-		$this->template->race = $this->manager->getRaceInfo();
-		$this->template->categories = $this->manager->listCategories();
+		$this->template->race = $this->race->getRaceInfo();
+		$this->template->categories = $this->category->listAll()->order('name');
+		if($catid){
+			$form = $this['categoryForm'];
+			$category = $this->category->load($catid);
+			if (!$category) {
+				$this->error('Záznam nenalezen!');
+			}
+			$form->setDefaults($category);
+		}
+
 	}
 
 	public function formCancelled() {

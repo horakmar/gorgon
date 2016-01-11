@@ -6,22 +6,21 @@ use Nette;
 use App\Model;
 
 
-class MainPresenter extends BasePresenter
-{
+class MainPresenter extends BasePresenter {
 
 	/** @var Model\Racemanager */
-	private $races;
+	private $race;
 
 
-	public function __construct(Model\RaceManager $races)
+	public function __construct(Model\Race $race)
 	{
-		$this->races = $races;
+		$this->race = $race;
 	}
 
 
 	public function renderDefault()
 	{
-		$this->template->races = $this->races->listRaces()->order('datetime_0 DESC');
+		$this->template->races = $this->race->listAll()->order('datetime_0 DESC');
 	}
 
 }

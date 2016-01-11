@@ -23,6 +23,8 @@ class Course extends BaseModel {
 	}
 
 	public function save($courseid, $course_val, $cp_val){
+		$course_val['length'] = strtr($course_val['length'], ',', '.');
+		$course_val['climb'] = strtr($course_val['climb'], ',', '.');
 		if($courseid){
 			$course = $this->load($courseid);
 			$this->loadCPs($course)->delete();
@@ -51,6 +53,11 @@ class Course extends BaseModel {
 		if(count($course_cp) > 0){
 			$this->database->table($this->raceid . parent::CP_TABLE_SUFF)->insert($course_cp);
 		}
+	}
+
+	public function countReferences($courseid){
+		return $this->load($courseid)
+			->related($this->raceid . parent::CATEGORY_TABLE_SUFF, 'course_id')->count();
 	}
 
 	public function delete($courseid) {

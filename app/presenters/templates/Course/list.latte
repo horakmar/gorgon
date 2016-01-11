@@ -11,8 +11,8 @@
   <tbody>
 	<tr n:foreach="$courses as $course">
 	  <td><a n:href="Course:edit $course->id">{$course->name}</a></td>
-	  <td>{$course->length}</td>
-	  <td>{$course->climb}</td>
+	  <td>{$course->length|replace:'.':','}</td>
+	  <td>{$course->climb|replace:'.':','}</td>
 	  <td><a n:href="Course:delete $course->id"><span class="glyphicon  glyphicon-remove"></span></a>
 	</tr>
   </tbody>

@@ -1,7 +1,7 @@
 {block content}
 <div class="row">
 	<div class="col-sm-4">
-		<div class="panel panel-warning">
+		<div n:class="panel, $refcount ? panel-danger : panel-warning">
 			<div class="panel-heading" n:block=title><b>Smazat trať</b></div>
 			<div class="panel-body">
 				<table class="table"><tbody>
@@ -9,6 +9,7 @@
 				<tr><td>Délka:</td><td> {$course['length']}</td></tr>
 				<tr><td>Stoupání:</td><td> {$course['climb']}</td></tr>
 				<tr><td>Kontroly:</td><td> {foreach $cps as $cp} {$cp['cpcode']}{sep}, {/sep} {/foreach}</td></tr>
+				<tr><td>Použito v kategoriích:</td><td> {$refcount} x</td></tr>
 				</tbody></table>
 				{control courseDeleteConfirm}
 			</div>

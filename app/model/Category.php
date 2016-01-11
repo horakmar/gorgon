@@ -34,13 +34,17 @@ class Category extends BaseModel {
 		$this->listAll()->insert($insert_val);
 	}
 
-	public function update($catid, $cat_val){
-		$this->database->table($this->cat_table_name)->get($catid)->update($cat_val);
+	public function update($catid, $values){
+		if($catid){
+			$this->listAll()->get($catid)->update($values);
+		}else{
+			$this->listAll()->insert($values);
+		}
 	}
 
-	public function isDeletable($catid){
-		return ($this->database->table($this->$raceid . parent::ENTRY_TABLE_SUFF)
-			->where('category_id', $catid)->count() > 0) ? false : true;
+	public function countReferences($catid){
+		return $this->load($catid)
+			->related($this->raceid . parent::ENTRY_TABLE_SUFF, 'category_id')->count();
 	}
 
 	public function delete($catid) {

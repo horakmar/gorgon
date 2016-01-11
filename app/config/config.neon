@@ -22,7 +22,7 @@ session:
 services:
 	- App\Model\UserManager
 	- App\Forms\SignFormFactory
-	- App\Model\RaceManager
+	- App\Model\Race
 	- App\Model\Course
 	- App\Model\Category
 	- App\Model\Entry

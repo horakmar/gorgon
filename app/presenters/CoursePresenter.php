@@ -15,8 +15,8 @@ class CoursePresenter extends BaseRacePresenter
 	/** @var \App\Model\Course */
 	public $course;
 	
-	public function __construct(\App\Model\RaceManager $raceman, \App\Model\Course $course) {
-		parent::__construct($raceman);
+	public function __construct(\App\Model\Race $race, \App\Model\Course $course) {
+		parent::__construct($race);
 		$this->course = $course;
 	}
 
@@ -88,13 +88,14 @@ class CoursePresenter extends BaseRacePresenter
 
 	public function renderDelete($courseid){
 		$this->template->course = $this->course->load($courseid);
+		$this->template->refcount = $this->course->countReferences($courseid);
 		$this->template->cps = $this->course->loadCPs($this->template->course);
 	}
 
 	public function renderList() {
 		$this->template->raceid = $this->raceid;
-		$this->template->race = $this->manager->getRaceInfo();
-		$this->template->courses = $this->course->listAll();
+		$this->template->race = $this->race->getRaceInfo();
+		$this->template->courses = $this->course->listAll()->order('name');
 	}
 
 	public function formCancelled() {
