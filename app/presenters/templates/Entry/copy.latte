@@ -1,0 +1,22 @@
+{block content}
+<h1 n:block=title>Kopírování závodníků - globální databáze</h1>
+
+{form entryCopyForm}
+<div class="row">
+	<div class="col-sm-5">
+		{label raceentry}{/label}
+		{input raceentry}
+	</div>
+	<div class="col-sm-2">
+		<p style="margin-top: 6em; text-align: center">{input torace}</p>
+		<p style="margin-top: 2em; text-align: center">{input toglobal}</p>
+		<p style="margin-top: 4em; text-align: center">{label si_collision}{/label}</p>
+		<p>{input si_collision}</p>
+	</div>
+	<div class="col-sm-5">
+		{label globalentry}{/label}
+		{input globalentry}
+	</div>
+</div>
+{/form}
+<p style="margin-top: 1em"><a n:href="Race:" class="btn btn-primary" role="button">Zpět</a></p>
