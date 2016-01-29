@@ -1,7 +1,13 @@
 {block content}
-Data read
 {if $method == 'POST'}
-	{print_r($data)}
+	SI: {$si_number}
+	Clear:  {$tm_clear}
+	Check:  {$tm_check}
+	Start:  {$tm_start}
+	Finish: {$tm_finish}
+	{foreach $punches as $punch}
+	K{$iterator->counter}: {$punch['cn']} ... {$punch['time']}
+	{/foreach}
 {else}
-	{$method}
+	Method {$method} not supported.
 {/if}
