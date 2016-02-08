@@ -26,6 +26,7 @@ services:
 	- App\Model\Course
 	- App\Model\Category
 	- App\Model\Entry
+	- App\Model\Reader
 	router: App\RouterFactory::createRouter
 
 latte:

@@ -6,18 +6,21 @@
 	  <thead><tr>
 		<th>Název</th>
 		<th>Trať</th>
+		<th>Čas startu z</th>
 		<th></th>
 	  </tr></thead>
 	  <tbody>
 		<tr n:foreach="$categories as $category">
 		  <td>{$category->name}</td>
 		  <td>{($category->course_id) ? $category->course->name}</td>
+		  <td>{$category->start_order|startorder}</td>
 		  <td><a n:href="Category:list $category->id"><span class="glyphicon  glyphicon-edit"></span></a>
 		  <a n:href="Category:delete $category->id"><span class="glyphicon  glyphicon-remove"></span></a></td>
 		</tr><tr>
 		{form categoryForm}
 		<td>{input name}</td>
 		<td>{input course_id}</td>
+		<td>{input start_order}</td>
 		<td>{input send}</td>
 		{/form}
 		</tr>

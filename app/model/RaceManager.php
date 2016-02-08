@@ -30,6 +30,9 @@ class Race extends BaseModel {
 			case 'course_cp' :
 				$constraints = "ADD FOREIGN KEY (`course_id`) REFERENCES `gorgon_1`.`{$values->raceid}__course`(`id`) ON DELETE CASCADE ON UPDATE RESTRICT";
 				break;
+			case 'read_punch' :
+				$constraints = "ADD FOREIGN KEY (`read_id`) REFERENCES `gorgon_1`.`{$values->raceid}__read`(`id`) ON DELETE CASCADE ON UPDATE RESTRICT";
+				break;
 			default:
 				$constraints = '';
 			}

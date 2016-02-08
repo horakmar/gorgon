@@ -1,13 +1,12 @@
 {block content}
 {if $method == 'POST'}
-	SI: {$si_number}
-	Clear:  {$tm_clear}
-	Check:  {$tm_check}
-	Start:  {$tm_start}
-	Finish: {$tm_finish}
+	SI: {$data['si_number']}
+	Clear:  {$data['tm_clear']}
+	Finish: {$data['tm_finish']}
 	{foreach $punches as $punch}
-	K{$iterator->counter}: {$punch['cn']} ... {$punch['time']}
+	K{$iterator->counter}: {$punch['cpcode']} ... {$punch['cptime']}
 	{/foreach}
 {else}
 	Method {$method} not supported.
+	Raceid = {$raceid}.
 {/if}

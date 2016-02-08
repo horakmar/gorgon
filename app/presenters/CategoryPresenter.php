@@ -7,8 +7,14 @@ use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
 use Tracy\Debugger;
 
-class CategoryPresenter extends BaseRacePresenter
-{
+class CategoryPresenter extends BaseRacePresenter {
+
+	public static $start_order = [
+		'list_si' => 'Startovka, čip',
+		'si_list' => 'Čip, startovka',
+		'list'  => 'Pouze startovka',
+		'si'   => 'Pouze čip'
+	];
 
 	/** @var \App\Model\Category */
 	private $category;
@@ -28,6 +34,7 @@ class CategoryPresenter extends BaseRacePresenter
 		$form->addText('name', 'Kategorie')
 			->setRequired('Název kategorie je povinný');
 		$form->addSelect('course_id', 'Trať', $this->race->listCourses()->fetchPairs('id','name'));
+		$form->addSelect('start_order', 'Start', self::$start_order);
 		$form->addSubmit('send', 'OK')
 			->getControlPrototype()->addClass('btn-primary');
 		$form->onSuccess[] = [$this, 'categoryFormSucceeded'];
@@ -69,6 +76,10 @@ class CategoryPresenter extends BaseRacePresenter
 		$this->template->raceid = $this->raceid;
 		$this->template->race = $this->race->getRaceInfo();
 		$this->template->categories = $this->category->listAll()->order('name');
+		$this->template->addFilter('startorder', function($s){
+        	return self::$start_order[$s];
+		});
+
 		if($catid){
 			$form = $this['categoryForm'];
 			$category = $this->category->load($catid);

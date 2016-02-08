@@ -13,6 +13,8 @@ abstract class BaseModel extends Nette\Object {
 	const ENTRY_TABLE_SUFF = '__entry';
 	const COURSE_TABLE_SUFF = '__course';
 	const CP_TABLE_SUFF = '__course_cp';
+	const READ_TABLE_SUFF = '__read';
+	const READPUNCH_TABLE_SUFF = '__read_punch';
 
 
 	/** @var Nette\Database\Context */

@@ -32,7 +32,8 @@
 		"latte/latte": "~2.3.0",
 		"tracy/tracy": "~2.3.0",
 		"dg/adminer-custom": "~1.6",
-		"nextras/forms": "^1.6"
+		"nextras/forms": "^1.6",
+		"o5/grido": "^2.1"
 	},
 	"require-dev": {
 		"nette/tester": "~1.3"
