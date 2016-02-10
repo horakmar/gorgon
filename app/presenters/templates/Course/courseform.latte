@@ -33,9 +33,9 @@
 			  <td class="CPlabel">K0</td>
 			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]"></td>
 			  <td><select name="cptype[]" onchange="setEnabled(this)">
-				<option value="regular">Běžná</option>
-				<option value="freeo">FreeO</option>
-				<option value="bonus">Bonus</option>
+				<option value="1">Běžná</option>
+				<option value="2">FreeO</option>
+				<option value="3">Bonus</option>
 			  </select></td>
 			  <td><input type="text" size="2" maxlength="2" name="cpsect[]"></td>
  			  <td><input type="text" size="2" maxlength="2" name="cpchange[]"></td>
@@ -47,9 +47,9 @@
 			  <td class="CPlabel">K{$iterator->counter}</td>
 			  <td><input class="IDcode" type="text" size="3" maxlength="3" name="cpcode[]" n:attr="value => isset($cp['cpcode']) ? $cp['cpcode']"></td>
 			  <td><select name="cptype[]" onchange="setEnabled(this)">
-				<option value="regular" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 'regular'">Běžná</option>
-				<option value="freeo" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 'freeo'">FreeO</option>
-				<option value="bonus" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 'bonus'">Bonus</option>
+				<option value="1" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 1">Běžná</option>
+				<option value="2" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 2">FreeO</option>
+				<option value="3" n:attr="selected => isset($cp['cptype']) ? $cp['cptype'] == 3">Bonus</option>
 			  </select></td>
 			  <td><input type="text" size="2" maxlength="2" name="cpsect[]" n:attr="value => isset($cp['cpsect']) ? $cp['cpsect']"></td>
  			  <td><input type="text" size="2" maxlength="2" name="cpchange[]" n:attr="value => isset($cp['cpchange']) ? $cp['cpchange']"></td>

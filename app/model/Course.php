@@ -37,7 +37,7 @@ class Course extends BaseModel {
 		foreach($cp_val['cpcode'] as $key => $val){
 			if($key == 0) continue; 		// skip template value
 			if($val != ''){
-				if($cp_val['cptype'][$key] == 'regular'){
+				if($cp_val['cptype'][$key] == 1){
 					$cpseq = ++$seq;
 				}else{
 					$cpseq = 0;

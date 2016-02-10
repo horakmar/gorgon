@@ -40,8 +40,13 @@ class GlobalentryPresenter extends EntryPresenter
 	}
 
 
-	public function renderList($entryid = NULL) {
-		$this->template->entries = $this->entry->listAll()->order('lname');
+	public function renderList($entryid = NULL, $page = 1) {
+		$pag = new Nette\Utils\Paginator;
+		$pag->setItemCount($this->entry->listAll()->count());
+		$pag->setItemsPerPage(20);
+		$pag->setPage($page);
+		$this->template->entries = $this->entry->listAll()->order('lname')
+			->limit($pag->getLength(), $pag->getOffset());
 		if($entryid){
 			$form = $this['entryForm'];
 			$entry = $this->entry->load($entryid);

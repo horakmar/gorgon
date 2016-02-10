@@ -15,6 +15,9 @@ class Race extends BaseModel {
 	const RACE_TABLES = 'best_splits course course_cp category entry read read_punch results splits';
 	const TEMPLATE_PREFIX = 't';
 
+	const TYPE_TRAINING = 1,
+		  TYPE_RACE = 2;
+
 	public function addRace($values) {
 		foreach(explode(' ', self::RACE_TABLES) as $tb){
 			$racetb = $values->raceid . '__' . $tb;

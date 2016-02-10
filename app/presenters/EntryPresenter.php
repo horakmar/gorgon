@@ -5,30 +5,29 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
+use App\Model\Entry;
 use Tracy\Debugger;
 
-class EntryPresenter extends BaseRacePresenter
-{
-	const GLOBTB = 1;
+class EntryPresenter extends BaseRacePresenter {
 
 	public static $start_options = [
-			'none' => 'Nic',
-			'early' => 'Brzy',
-			'late'  => 'Pozdě',
-			'red'   => 'Červená',
-			'orange' => 'Oranžová'
-		];
+		Entry::STRT_NONE => 'Nic',
+		Entry::STRT_EARLY => 'Brzy',
+		Entry::STRT_LATE  => 'Pozdě',
+		Entry::STRT_RED   => 'Červená',
+		Entry::STRT_ORANGE => 'Oranžová'
+	];
 	
 	public static $collision_options = [
-		'add' => ' Přidat',
-		'replace' => ' Přepsat',
-		'ignore' => ' Ignorovat'
+		Entry::COLL_ADD => ' Přidat',
+		Entry::COLL_RPL => ' Přepsat',
+		Entry::COLL_IGN => ' Ignorovat'
 	];
 
-	/** @var \App\Model\Entry */
+	/** @var Entry */
 	protected $entry;
 	
-	public function __construct(\App\Model\Race $race, \App\Model\Entry $entry) {
+	public function __construct(\App\Model\Race $race, Entry $entry) {
 		parent::__construct($race);
 		$this->entry = $entry;
 	}
@@ -60,11 +59,11 @@ class EntryPresenter extends BaseRacePresenter
 		$raceentry = $form->addMultiSelect('raceentry', 'Přihlášky závodu:', $this->entry->listNames())
 			->addRule(Form::FILLED, "Nic není označeno.");
 		$raceentry->getControlPrototype()->size(25);
-		$globalentry = $form->addMultiSelect('globalentry', 'DB závodníků :', $this->entry->listNames(self::GLOBTB))
+		$globalentry = $form->addMultiSelect('globalentry', 'DB závodníků :', $this->entry->listNames(Entry::GLOBTB))
 			->addRule(Form::FILLED, "Nic není označeno.");
 		$globalentry->getControlPrototype()->size(25);
 		$form->addRadioList('si_collision', 'Stejné SI:', self::$collision_options)
-			->setValue('add');
+			->setValue(Entry::COLL_ADD);
 		$form->addSubmit('torace', '<span class="glyphicon glyphicon-arrow-left"></span>')
 			->setValidationScope([$globalentry])
 			->getControlPrototype()->addClass('btn-default');
@@ -78,9 +77,9 @@ class EntryPresenter extends BaseRacePresenter
 
 	public function entryCopyFormSucceeded($form, $values){
 		if($form->isSubmitted()->getName() == 'toglobal'){
-			$ret = $this->entry->copy(NULL, self::GLOBTB, $values['raceentry'], $values['si_collision']);
+			$ret = $this->entry->copy(NULL, Entry::GLOBTB, $values['raceentry'], $values['si_collision']);
 		}else{
-			$ret = $this->entry->copy(self::GLOBTB, NULL, $values['globalentry'], $values['si_collision']);
+			$ret = $this->entry->copy(Entry::GLOBTB, NULL, $values['globalentry'], $values['si_collision']);
 		}
 		$message = '';
 		foreach($ret as $mess){
@@ -108,9 +107,16 @@ class EntryPresenter extends BaseRacePresenter
 		}
 	}
 
-	public function renderList($entryid = NULL) {
+	public function renderList($entryid = NULL, $page = 1) {
+		$pag = new Nette\Utils\Paginator;
+		$pag->setItemCount($this->entry->listAll()->count());
+		$pag->setItemsPerPage(10);
+		$pag->setPage($page);
+		
+		$this->template->pag = $pag;
 		$this->template->raceid = $this->raceid;
-		$this->template->entries = $this->entry->listAll()->order('lname');
+		$this->template->entries = $this->entry->listAll()->order('lname')
+			->limit($pag->getLength(), $pag->getOffset());
 		$this->template->addFilter('startopt', function($s){
         	return self::$start_options[$s];
 		});

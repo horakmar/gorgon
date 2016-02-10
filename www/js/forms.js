@@ -27,12 +27,12 @@ function setEnabled(obj){
 	var container = $(obj).closest(".Ccont");
 //	$("#debug").text($(obj).val());
 	switch($(obj).val()){
-	case "freeo" :
+	case "2" : // freeo
 		$(container).find("[name='cpsect[]']").prop('disabled',false);
 		$(container).find("[name='cpchange[]']").prop('disabled',false);
 		$(container).find("[name='cpdata[]']").prop('disabled',true);
 		break;
-	case "bonus" :
+	case "3" : // bonus
 		$(container).find("[name='cpsect[]']").prop('disabled',false);
 		$(container).find("[name='cpchange[]']").prop('disabled',false);
 		$(container).find("[name='cpdata[]']").prop('disabled',false);

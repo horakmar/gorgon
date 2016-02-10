@@ -23,8 +23,16 @@
 	  <td>{($entry->category_id) ? $entry->category->name}</td>
 	  <td>{$entry->start}</td>
 	  <td>{$entry->start_opt|startopt}</td>
-	  <td><a n:href="Entry:list $entry->id"><span class="glyphicon  glyphicon-edit"></span></a>
- <a n:href="Entry:delete $entry->id"><span class="glyphicon  glyphicon-remove"></span></a></td>
+	  <td><a n:href="Entry:list $entry->id, $pag->page"><span class="glyphicon glyphicon-edit"></span></a>
+ <a n:href="Entry:delete $entry->id"><span class="glyphicon glyphicon-remove"></span></a></td>
+	</tr><tr>
+	  <td colspan="9">
+		<a n:if="!$pag->first" n:href="Entry:list NULL, $pag->page - 1"><span class="glyphicon glyphicon-arrow-left"></span></a>
+		{for $p = 1; $p <= $pag->pageCount; $p++}
+			<a n:tag-if="$p != $pag->page" n:href="Entry:list NULL, $p"><b n:tag-if="$p == $pag->page">{$p}</b></a>
+		{if $p < $pag->pageCount} | {/if}
+		{/for}
+		<a n:if="!$pag->last" n:href="Entry:list NULL, $pag->page + 1"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
 	</tr><tr>
 	  {form entryForm}
 	  <td>{input lname}</td>

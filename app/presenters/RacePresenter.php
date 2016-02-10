@@ -6,12 +6,13 @@ use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
 use Tracy\Debugger;
+use App\Model\Race;
 
 class RacePresenter extends BaseRacePresenter
 {
 	public static $race_type = [
-		'training' => 'Trénink',
-		'race'     => 'Závod'
+		Race::TYPE_TRAINING => 'Trénink',
+		Race::TYPE_RACE     => 'Závod'
 	];
 
 	public function createComponentAddRaceForm() {
@@ -64,9 +65,11 @@ class RacePresenter extends BaseRacePresenter
 		$this->raceid = $raceid;
 		$this->template->raceid = $this->raceid;
 		$this->template->race = $this->race->getRaceInfo();
-		$this->template->courses = $this->race->listCourses()->order('name');
-		$this->template->categories = $this->race->listCategories()->order('name');
-		$this->template->entries = $this->race->listEntries()->order('lname');
+		$this->template->courses = $this->race->listCourses()->order('name')->limit(10);
+		$this->template->categories = $this->race->listCategories()->order('name')->limit(10);
+		$p = $this->race->listEntries();
+		$this->template->entry_count = count($p);
+		$this->template->entries = $p->order('lname')->limit(10);
 	}
 
 	public function renderDelete($raceid) {

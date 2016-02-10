@@ -5,21 +5,22 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
+use App\Model\Category;
 use Tracy\Debugger;
 
 class CategoryPresenter extends BaseRacePresenter {
 
 	public static $start_order = [
-		'list_si' => 'Startovka, čip',
-		'si_list' => 'Čip, startovka',
-		'list'  => 'Pouze startovka',
-		'si'   => 'Pouze čip'
+		Category::STORD_LIST_SI => 'Startovka, čip',
+		Category::STORD_SI_LIST => 'Čip, startovka',
+		Category::STORD_LIST => 'Jen startovka',
+		Category::STORD_SI => 'Jen čip'
 	];
 
-	/** @var \App\Model\Category */
+	/** @var Category */
 	private $category;
 	
-	public function __construct(\App\Model\Race $race, \App\Model\Category $category) {
+	public function __construct(\App\Model\Race $race, Category $category) {
 		parent::__construct($race);
 		$this->category = $category;
 	}

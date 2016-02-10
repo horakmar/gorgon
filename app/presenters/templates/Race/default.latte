@@ -50,6 +50,10 @@
 	      <td>{$entry->lname} {$entry->nick} {$entry->fname}</td>
 	      <td>{$entry->si_number}</td>
 	    </tr>
+		<tr n:if="$entry_count > 10">
+		  <td>...</td>
+		  <td></td>
+		</tr>
 	  </tbody>
 	</table>
 	<a n:href="Entry:copy" class="btn btn-primary" role="button">Kopírovat</a>

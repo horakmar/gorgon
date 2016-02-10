@@ -12,6 +12,16 @@ class Entry extends BaseModel {
 
 	const GLOBTB = 1;
 
+	const STRT_NONE = 0,
+		  STRT_EARLY = 1,
+		  STRT_LATE = 2,
+		  STRT_RED = 3,
+		  STRT_ORANGE = 4;
+
+	const COLL_ADD = 1,
+		  COLL_RPL = 2,
+		  COLL_IGN = 3;
+
 	public function listAll($global = NULL) {
 		$table = ($global) ? 'g' : $this->raceid;
 		return $this->database->table($table . parent::ENTRY_TABLE_SUFF);
@@ -54,10 +64,10 @@ class Entry extends BaseModel {
 			$same_si = $this->getBySI($row['si_number'], $to);
 			if($same_si->count() > 0){
 				switch($si_collision){
-				case 'ignore':
+				case self::COLL_IGN:
 					$ret[] = "Ignorováno: {$row['lname']} {$row['nick']} {$row['fname']}, SI: {$row['si_number']}";
 					continue 2;
-				case 'replace':
+				case self::COLL_RPL:
 					foreach($same_si as $rep){
 						$ret[] = "Přepsáno: {$rep['lname']} {$rep['nick']} {$rep['fname']}, SI: {$rep['si_number']}";
 					}

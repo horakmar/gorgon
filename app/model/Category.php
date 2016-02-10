@@ -10,6 +10,11 @@ use Tracy\Debugger;
  */
 class Category extends BaseModel {
 
+	const STORD_LIST_SI = 1,
+		  STORD_SI_LIST = 2,
+		  STORD_LIST = 3,
+		  STORD_SI = 4;
+
 	/** @var Nette\Database\Table\ActiveRow */
 	private $category;
 
