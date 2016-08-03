@@ -1,0 +1,19 @@
+=========================
+{if $data['si_name'] != ''}
+{$data['si_name']} ({$data['si_number']}, type {$data['si_type']})
+{else}
+SI: {$data['si_number']} (type {$data['si_type']})
+{/if}
+=========================
+Clear:  {$data['clear']}
+Check:  {$data['check']}
+Start:  {$data['start']}
+St_00:  {$time_0}
+-------------------------
+{foreach $punches as $punch}
+{sprintf("%3s (%3d) ... %s %s", 'K' . $iterator->counter, $punch['cpcode'], $punch['time_s'], $punch['split_s'])}
+{/foreach}
+-------------------------
+Finish: {$data['finish']}
+=========================
+

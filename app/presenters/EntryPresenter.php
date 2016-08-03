@@ -6,6 +6,7 @@ use Nette;
 use Nette\Application\UI\Form;
 use Nextras\Forms\Rendering\Bs3FormRenderer;
 use App\Model\Entry;
+use Grido\Grid;
 use Tracy\Debugger;
 
 class EntryPresenter extends BaseRacePresenter {
@@ -132,6 +133,55 @@ class EntryPresenter extends BaseRacePresenter {
 
 	public function formCancelled() {
 		$this->redirect('Entry:list');
+	}
+
+	protected function createComponentGrid($name)
+	{
+		$grid = new Grid($this, $name);
+		$grid->setModel($this->entry->listAll());
+
+		$grid->addColumnText('lname', 'Příjmení')
+			->setSortable()
+			->setFilterText()
+				->setSuggestion();
+		$grid->addColumnText('fname', 'Jméno')
+			->setSortable()
+			->setFilterText()
+				->setSuggestion();
+		$grid->addColumnText('nick', 'Nick')
+			->setFilterText();
+		$grid->addColumnText('registration', 'Reg.')
+			->setSortable()
+			->setFilterText();
+		$grid->addColumnText('si_number', 'SI')
+			->setSortable()
+			->setFilterText();
+		$grid->addColumnText('category', 'Kat.')
+			->setColumn(function($i){
+				return $i->category['name'];
+		   	});
+		$grid->addColumnNumber('start', 'Start')
+			->setSortable();
+		$grid->addColumnText('start_opt', 'Volby')
+			->setColumn(function($i){
+				return self::$start_options[$i->start_opt];
+		   	});
+		$cats = $this->race->listCategories()->fetchPairs('id','name');
+		$catselect = array('' => '');
+		foreach($cats as $k => $v){
+			$catselect[$k] = $v;
+		}
+
+		$grid->addFilterSelect('category', 'Kat.', $catselect)
+			->setColumn('category_id');
+
+		$grid->filterRenderType = \Grido\Components\Filters\Filter::RENDER_INNER;
+		$grid->setExport();
+	}
+
+	public function renderListg() {
+		$this->template->raceid = $this->raceid;
+		$this->template->ajax = 1;
 	}
 
 }

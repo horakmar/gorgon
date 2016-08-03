@@ -45,9 +45,9 @@ class Course extends BaseModel {
 				$course_cp[] = ['cpcode' => $val, 'sequence' => $cpseq,
 				  'course_id' => $courseid,
 				  'cptype' => $cp_val['cptype'][$key],
-				  'cpsect' => $cp_val['cpsect'][$key],
-				  'cpchange' => $cp_val['cpchange'][$key],
-				  'cpdata' => $cp_val['cpdata'][$key]];
+				  'cpsect' => self::empty2Null($cp_val['cpsect'][$key]),
+				  'cpchange' => self::empty2Null($cp_val['cpchange'][$key]),
+				  'cpdata' => self::empty2Null($cp_val['cpdata'][$key])];
 			}
 		}
 		if(count($course_cp) > 0){

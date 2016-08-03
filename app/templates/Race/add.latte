@@ -1,0 +1,16 @@
+{var vendorPath = $basePath . "/vendor"}
+{block content}
+<h1 n:block=title>Nový závod</h1>
+
+{control raceForm}
+
+{define morescripts}
+<script src="{$vendorPath}/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+<script src="{$vendorPath}/js/locales/bootstrap-datetimepicker.cs.js" type="text/javascript"></script>
+<script src="{$vendorPath}/nextras/nextras.netteForms.js" type="text/javascript"></script>
+<script src="{$vendorPath}/nextras/nextras.datetimepicker.init.js" type="text/javascript"></script>
+{/define}
+
+{define morestyle}
+	<link href="{$vendorPath}/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+{/define}

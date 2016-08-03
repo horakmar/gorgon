@@ -31,4 +31,13 @@ abstract class BaseModel extends Nette\Object {
 	public function setRace($raceid = NULL) {
 		$this->raceid = $raceid;
 	}
+
+	public static function empty2Null($data) {
+		return ($data == '') ? NULL : $data;
+	}
+
+	public static function time2sec($datetime) {
+		list($h, $m, $s) = explode(":", explode(" ", $datetime)[1]);
+		return $h*3600 + $m*60 + $s;
+	}
 }

@@ -41,7 +41,10 @@ class Entry extends BaseModel {
 	}
 
 	public function update($entryid, $values) {
+		$values['start'] = self::empty2Null($values['start']);
+		$values['si_number'] = self::empty2Null($values['si_number']);
 		if($entryid){
+			Debugger::bardump($values);
 			$this->listAll()->get($entryid)->update($values);
 		}else{
 			$this->listAll()->insert($values);

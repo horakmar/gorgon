@@ -2,7 +2,7 @@
  * @param string   $basePath web base path
  * @param array    $flashes  flash messages
  *}
-
+{var vendorPath = $basePath . "/vendor"}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,10 +15,8 @@
     <title>Gorgon</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{$basePath}/bootstrap3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="{$basePath}/bootstrap3/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="{$vendorPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{$vendorPath}/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{$basePath}/css/main.css" rel="stylesheet">
@@ -86,14 +84,10 @@
     </div> <!-- /container -->
 
 	{block scripts}
-	<script src="{$basePath}/js/netteForms.min.js"></script>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{$basePath}/bootstrap3/assets/js/ie10-viewport-bug-workaround.js"></script>
-	<script src="{$basePath}/bootstrap3/assets/js/vendor/jquery.min.js"></script>
-	<script src="{$basePath}/bootstrap3/dist/js/bootstrap.min.js"></script>
+    <script src="{$vendorPath}/moment/moment.min.js"></script>
+	<script src="{$vendorPath}/jquery/jquery.min.js"></script>
+	<script src="{$vendorPath}/bootstrap/js/bootstrap.min.js"></script>
+	<script src="{$vendorPath}/js/netteForms.min.js"></script>
 	{ifset #morescripts}
 		{include morescripts}
 	{/ifset}

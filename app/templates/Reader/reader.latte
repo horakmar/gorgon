@@ -1,0 +1,16 @@
+{block content}
+{if $method == 'POST'}
+	{if $action == 'init'}
+		INIT
+	{else}
+		SI: {$data['si_number']}
+		Clear:  {$data['tm_clear']}
+		Finish: {$data['tm_finish']}
+		{foreach $punches as $punch}
+		K{$iterator->counter}: {$punch['cpcode']} ... {$punch['cptime']}
+		{/foreach}
+	{/if}
+{else}
+	Method {$method} not supported.
+	Raceid = {$raceid}.
+{/if}

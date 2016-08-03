@@ -76,6 +76,7 @@ class CoursePresenter extends BaseRacePresenter
 			$this->template->cps[] = [];
 		}
 		$this->template->title = "Nová trať";
+		Debugger::bardump($this['courseForm']);
 	}
 
 	public function renderEdit($courseid){

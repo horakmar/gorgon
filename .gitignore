@@ -1,3 +1,5 @@
+tmp/*
+bower_components/*
 log/*
 temp/*
 vendor/*

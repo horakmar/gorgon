@@ -1,0 +1,9 @@
+Results - printer version
+=========================
+SI: {$data['si_number']}
+Clear:  {$data['tm_clear']}
+Finish: {$data['tm_finish']}
+{foreach $punches as $punch}
+K{$iterator->counter}: {$punch['cpcode']} ... {$punch['cptime']}
+{/foreach}
+=========================

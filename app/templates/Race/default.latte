@@ -1,5 +1,5 @@
 {block content}
-<h1 n:block=title>Závod {$raceid}</h1>
+<h1 n:block=title>Závod {$race['name']} <a n:href="Race:edit">upravit</a></h1>
 <div class="panel panel-default">
   <div class="panel-body">{$race['descr']}</div>
 </div>
